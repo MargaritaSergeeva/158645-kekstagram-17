@@ -34,7 +34,6 @@ var generateCommentObject = function (namesArr, commentsArr) {
 };
 
 var generateUsersPhotos = function (min, max) {
-
   for (var i = 0; i < 25; i++) {
     var userComments = [];
 
