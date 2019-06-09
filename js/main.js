@@ -1,11 +1,9 @@
 'use strict';
 
-var usersPhotosSection = document.querySelector('.pictures');
-var userPhotoTemplate = document.querySelector('#picture')
-    .content
-    .querySelector('.picture');
-var fragment = document.createDocumentFragment();
-
+var AVATARS_COUNT = 6;
+var PHOTOS_COUNT = 25;
+var MIN_RANDOM_VALUE = 15;
+var MAX_RANDOM_VALUE = 200;
 var COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -14,8 +12,13 @@ var COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-
 var NAMES = ['Виктор', 'Елена', 'Катя', 'Павел', 'Олеся', 'Инна', 'Алла'];
+
+var usersPhotosSection = document.querySelector('.pictures');
+var userPhotoTemplate = document.querySelector('#picture')
+    .content
+    .querySelector('.picture');
+var fragment = document.createDocumentFragment();
 
 var usersPhotos = [];
 
@@ -23,23 +26,23 @@ var getRandomValue = function (arr) {
   return arr[Math.round(-0.5 + Math.random() * arr.length)];
 };
 
-var generateCommentObject = function (namesArr, commentsArr) {
+var generateCommentObject = function (namesArr, commentsArr, count) {
   var userComment = {
     name: getRandomValue(namesArr),
     message: getRandomValue(commentsArr),
-    avatar: 'img/avatar-' + Math.round(0.5 + Math.random() * 6) + '.svg'
+    avatar: 'img/avatar-' + Math.round(0.5 + Math.random() * count) + '.svg'
   };
 
   return userComment;
 };
 
-var generateUsersPhotos = function (min, max) {
-  for (var i = 0; i < 25; i++) {
+var generateUsersPhotos = function (min, max, count) {
+  for (var i = 0; i < count; i++) {
     var userComments = [];
 
     for (var j = 0; j < Math.round(min - 0.5 + Math.random() * (max - min + 1)); j++) {
       userComments[j] = [
-        generateCommentObject(NAMES, COMMENTS)
+        generateCommentObject(NAMES, COMMENTS, AVATARS_COUNT)
       ];
     }
 
@@ -71,5 +74,5 @@ var addUsersPhotos = function (photosArr) {
   return fragment;
 };
 
-usersPhotos = generateUsersPhotos(15, 200);
+usersPhotos = generateUsersPhotos(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE, PHOTOS_COUNT);
 usersPhotosSection.appendChild(addUsersPhotos(usersPhotos));
