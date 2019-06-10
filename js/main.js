@@ -72,7 +72,7 @@ var generateUsersPhotos = function (min, max, count) {
 };
 
 var createUserPhoto = function (photo) {
-  if (photo.length > 0) {
+  if (photo) {
     var userPhotoTemplate = document.querySelector('#picture')
       .content
       .querySelector('.picture');
