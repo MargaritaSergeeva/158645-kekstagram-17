@@ -43,7 +43,7 @@ var generateCommentsArray = function (min, max) {
   var userComments = [];
 
   if (max) {
-    min = !min ? 0 : min;
+    min = min || 0;
 
     for (var i = 0; i < Math.round(min - 0.5 + Math.random() * (max - min + 1)); i++) {
       userComments[i] = [
@@ -57,7 +57,7 @@ var generateCommentsArray = function (min, max) {
 
 var generateUsersPhotos = function (min, max, count) {
   if (max & count) {
-    min = !min ? 0 : min;
+    min = min || 0;
 
     for (var i = 0; i < count; i++) {
       usersPhotos[i] = {
