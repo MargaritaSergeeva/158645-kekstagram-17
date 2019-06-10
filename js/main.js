@@ -77,7 +77,7 @@ var createUserPhoto = function (photo) {
   .querySelector('.picture');
   var userPhotoElement = userPhotoTemplate.cloneNode(true);
 
-  if (photo) {
+  if (Object.keys(photo).length > 0) {
     userPhotoElement.querySelector('.picture__img').src = photo.url;
     userPhotoElement.querySelector('.picture__likes').textContent = photo.likes;
     userPhotoElement.querySelector('.picture__comments').textContent = photo.comments.length;
