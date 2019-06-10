@@ -63,7 +63,7 @@ var generateUsersPhotos = function (min, max, count) {
       usersPhotos[i] = {
         url: 'photos/' + (i + 1) + '.jpg',
         likes: Math.round(min - 0.5 + Math.random() * (max - min + 1)),
-        comments: generateCommentsArray(undefined, MAX_RANDOM_VALUE)
+        comments: generateCommentsArray(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE)
       };
     }
   }
