@@ -26,58 +26,58 @@ var getRandomValue = function (arr) {
 };
 
 var generateCommentObject = function (namesArr, commentsArr, count) {
+  var userComment = {};
+
   if (namesArr.length > 0 && commentsArr.length > 0 && count) {
-    var userComment = {
+    userComment = {
       name: getRandomValue(namesArr),
       message: getRandomValue(commentsArr),
       avatar: 'img/avatar-' + Math.round(0.5 + Math.random() * count) + '.svg'
     };
-
-    return userComment;
   }
 
-  return {};
+  return userComment;
 };
 
 var generateCommentsArray = function (min, max) {
-  if (min && max) {
-    var userComments = [];
+  var userComments = [];
+
+  if (max) {
+    min = !min ? 0 : min;
 
     for (var i = 0; i < Math.round(min - 0.5 + Math.random() * (max - min + 1)); i++) {
       userComments[i] = [
         generateCommentObject(NAMES, COMMENTS, AVATARS_COUNT)
       ];
     }
-
-    return userComments;
   }
 
-  return [];
+  return userComments;
 };
 
 var generateUsersPhotos = function (min, max, count) {
-  if (min & max & count) {
+  if (max & count) {
+    min = !min ? 0 : min;
+
     for (var i = 0; i < count; i++) {
       usersPhotos[i] = {
         url: 'photos/' + (i + 1) + '.jpg',
         likes: Math.round(min - 0.5 + Math.random() * (max - min + 1)),
-        comments: generateCommentsArray(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE)
+        comments: generateCommentsArray(undefined, MAX_RANDOM_VALUE)
       };
     }
-
-    return usersPhotos;
   }
 
-  return [];
+  return usersPhotos;
 };
 
 var createUserPhoto = function (photo) {
-  if (photo) {
-    var userPhotoTemplate = document.querySelector('#picture')
-      .content
-      .querySelector('.picture');
-    var userPhotoElement = userPhotoTemplate.cloneNode(true);
+  var userPhotoTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
+  var userPhotoElement = userPhotoTemplate.cloneNode(true);
 
+  if (photo) {
     userPhotoElement.querySelector('.picture__img').src = photo.url;
     userPhotoElement.querySelector('.picture__likes').textContent = photo.likes;
     userPhotoElement.querySelector('.picture__comments').textContent = photo.comments.length;
@@ -89,9 +89,9 @@ var createUserPhoto = function (photo) {
 };
 
 var addUsersPhotos = function (photosArr) {
-  if (photosArr.length > 0) {
-    var fragment = document.createDocumentFragment();
+  var fragment = document.createDocumentFragment();
 
+  if (photosArr.length > 0) {
     for (var i = 0; i < photosArr.length; i++) {
       fragment.appendChild(createUserPhoto(photosArr[i]));
     }
