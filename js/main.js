@@ -36,20 +36,24 @@ var generateCommentObject = function (namesArr, commentsArr, count) {
   return userComment;
 };
 
+var generateCommentsArray = function (min, max) {
+  var userComments = [];
+
+  for (var i = 0; i < Math.round(min - 0.5 + Math.random() * (max - min + 1)); i++) {
+    userComments[i] = [
+      generateCommentObject(NAMES, COMMENTS, AVATARS_COUNT)
+    ];
+  }
+
+  return userComments;
+};
+
 var generateUsersPhotos = function (min, max, count) {
   for (var i = 0; i < count; i++) {
-    var userComments = [];
-
-    for (var j = 0; j < Math.round(min - 0.5 + Math.random() * (max - min + 1)); j++) {
-      userComments[j] = [
-        generateCommentObject(NAMES, COMMENTS, AVATARS_COUNT)
-      ];
-    }
-
     usersPhotos[i] = {
       url: 'photos/' + (i + 1) + '.jpg',
       likes: Math.round(min - 0.5 + Math.random() * (max - min + 1)),
-      comments: userComments
+      comments: generateCommentsArray(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE)
     };
   }
 
