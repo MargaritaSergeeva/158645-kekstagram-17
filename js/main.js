@@ -133,30 +133,53 @@ var onPopupEscPress = function (evt) {
 };
 
 var getNamberFromInputValue = function (element) {
-  var numberArr = element.value.split('%');
-  var number = +numberArr[0];
+  var numberArr = [];
+  var number = 0;
+
+  if (element) {
+    numberArr = element.value.split('%');
+    number = +numberArr[0];
+  }
 
   return number;
 };
 
 var raiseInputValueWithPercent = function (element, number, minValue, maxValue, step) {
-  if (number >= minValue && number < maxValue) {
-    number += step;
-  }
+  minValue = minValue || 5;
+  maxValue = maxValue || 100;
+  step = step || 5;
+  number = number || minValue;
 
-  element.value = number + '%';
+  if (element) {
+    if (number >= minValue && number < maxValue) {
+      number += step;
+    }
+
+    element.value = number + '%';
+  }
 };
 
 var lowerInputValueWithPercent = function (element, number, minValue, maxValue, step) {
-  if (number > minValue && number <= maxValue) {
-    number -= step;
-  }
+  minValue = minValue || 5;
+  maxValue = maxValue || 100;
+  step = step || 5;
+  number = number || maxValue;
 
-  element.value = number + '%';
+  if (element) {
+    if (number > minValue && number <= maxValue) {
+      number -= step;
+    }
+
+    element.value = number + '%';
+  }
 };
 
 var changeImgScale = function (element, number) {
-  element.querySelector('img').style.transform = 'scale(' + number / 100 + ')';
+  number = number || 100;
+
+  if (element) {
+    element.querySelector('img').style.transform = 'scale(' + number / 100 + ')';
+  }
 };
 
 
