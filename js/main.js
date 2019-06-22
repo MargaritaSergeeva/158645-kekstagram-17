@@ -1,5 +1,6 @@
 'use strict';
 
+var ESC_KEYCODE = 27;
 var AVATARS_COUNT = 6;
 var PHOTOS_COUNT = 25;
 var MIN_RANDOM_VALUE = 15;
@@ -15,7 +16,32 @@ var COMMENTS = [
 ];
 
 var usersPhotosSection = document.querySelector('.pictures');
+var uploadImage = document.querySelector('.img-upload__overlay');
+var openUploadImage = document.querySelector('#upload-file');
+var closeUploadImage = uploadImage.querySelector('#upload-cancel');
+var zoomOutImg = uploadImage.querySelector('.scale__control--smaller');
+var zoomInImg = uploadImage.querySelector('.scale__control--bigger');
+var zoomValueImg = uploadImage.querySelector('.scale__control--value');
 var usersPhotos = [];
+
+
+var showElement = function (element) {
+  if (element) {
+    element.classList.remove('hidden');
+  }
+};
+
+var closeElement = function (element) {
+  if (element) {
+    element.classList.add('hidden');
+  }
+};
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeElement(uploadImage);
+  }
+};
 
 var getRandomValue = function (arr) {
   if (arr.length > 0) {
@@ -101,6 +127,17 @@ var addUsersPhotos = function (photosArr) {
 
   return {};
 };
+
+openUploadImage.addEventListener('change', function () {
+  showElement(uploadImage);
+  document.addEventListener('keydown', onPopupEscPress);
+});
+
+closeUploadImage.addEventListener('click', function () {
+  closeElement(uploadImage);
+  document.removeEventListener('keydown', onPopupEscPress);
+  openUploadImage.value = '';
+});
 
 usersPhotos = generateUsersPhotos(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE, PHOTOS_COUNT);
 usersPhotosSection.appendChild(addUsersPhotos(usersPhotos));
