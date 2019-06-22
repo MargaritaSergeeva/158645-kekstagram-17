@@ -5,6 +5,9 @@ var AVATARS_COUNT = 6;
 var PHOTOS_COUNT = 25;
 var MIN_RANDOM_VALUE = 15;
 var MAX_RANDOM_VALUE = 200;
+var MIN_PERCENT_INPUT_VALUE = 25;
+var MAX_PERCENT_INPUT_VALUE = 100;
+var STEP_PERCENT_INPUT_VALUE = 25;
 var NAMES = ['Виктор', 'Елена', 'Катя', 'Павел', 'Олеся', 'Инна', 'Алла'];
 var COMMENTS = [
   'Всё отлично!',
@@ -22,26 +25,9 @@ var closeUploadImage = uploadImage.querySelector('#upload-cancel');
 var zoomOutImg = uploadImage.querySelector('.scale__control--smaller');
 var zoomInImg = uploadImage.querySelector('.scale__control--bigger');
 var zoomValueImg = uploadImage.querySelector('.scale__control--value');
+var imgPreview = uploadImage.querySelector('.img-upload__preview');
 var usersPhotos = [];
 
-
-var showElement = function (element) {
-  if (element) {
-    element.classList.remove('hidden');
-  }
-};
-
-var closeElement = function (element) {
-  if (element) {
-    element.classList.add('hidden');
-  }
-};
-
-var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closeElement(uploadImage);
-  }
-};
 
 var getRandomValue = function (arr) {
   if (arr.length > 0) {
@@ -128,6 +114,55 @@ var addUsersPhotos = function (photosArr) {
   return {};
 };
 
+var showElement = function (element) {
+  if (element) {
+    element.classList.remove('hidden');
+  }
+};
+
+var closeElement = function (element) {
+  if (element) {
+    element.classList.add('hidden');
+  }
+};
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeElement(uploadImage);
+  }
+};
+
+var getNamberFromInputValue = function (element) {
+  var numberArr = element.value.split('%');
+  var number = +numberArr[0];
+
+  return number;
+};
+
+var raiseInputValueWithPercent = function (element, number, minValue, maxValue, step) {
+  if (number >= minValue && number < maxValue) {
+    number += step;
+  }
+
+  element.value = number + '%';
+};
+
+var lowerInputValueWithPercent = function (element, number, minValue, maxValue, step) {
+  if (number > minValue && number <= maxValue) {
+    number -= step;
+  }
+
+  element.value = number + '%';
+};
+
+var changeImgScale = function (element, number) {
+  element.querySelector('img').style.transform = 'scale(' + number / 100 + ')';
+};
+
+
+usersPhotos = generateUsersPhotos(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE, PHOTOS_COUNT);
+usersPhotosSection.appendChild(addUsersPhotos(usersPhotos));
+
 openUploadImage.addEventListener('change', function () {
   showElement(uploadImage);
   document.addEventListener('keydown', onPopupEscPress);
@@ -139,5 +174,14 @@ closeUploadImage.addEventListener('click', function () {
   openUploadImage.value = '';
 });
 
-usersPhotos = generateUsersPhotos(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE, PHOTOS_COUNT);
-usersPhotosSection.appendChild(addUsersPhotos(usersPhotos));
+zoomInImg.addEventListener('click', function () {
+  raiseInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE);
+  changeImgScale(imgPreview, getNamberFromInputValue(zoomValueImg));
+});
+
+zoomOutImg.addEventListener('click', function () {
+  lowerInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE);
+  changeImgScale(imgPreview, getNamberFromInputValue(zoomValueImg));
+});
+
+
