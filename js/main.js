@@ -26,6 +26,13 @@ var zoomOutImg = uploadImage.querySelector('.scale__control--smaller');
 var zoomInImg = uploadImage.querySelector('.scale__control--bigger');
 var zoomValueImg = uploadImage.querySelector('.scale__control--value');
 var imgPreview = uploadImage.querySelector('.img-upload__preview');
+var effectsListImg = uploadImage.querySelector('.effects__list');
+var effectSlider = uploadImage.querySelector('.effect-level');
+var effectSliderLine = effectSlider.querySelector('.effect-level__line');
+var effectsSliderPin = effectSlider.querySelector('.effect-level__pin');
+var effectsLavelValue = effectSlider.querySelector('.effect-level__value');
+var originImgInput = uploadImage.querySelector('#effect-none');
+
 var usersPhotos = [];
 
 
@@ -39,8 +46,9 @@ var getRandomValue = function (arr) {
 
 var generateCommentObject = function (namesArr, commentsArr, count) {
   var userComment = {};
+  count = count || AVATARS_COUNT;
 
-  if (namesArr.length > 0 && commentsArr.length > 0 && count) {
+  if (namesArr.length > 0 && commentsArr.length > 0) {
     userComment = {
       name: getRandomValue(namesArr),
       message: getRandomValue(commentsArr),
@@ -53,10 +61,9 @@ var generateCommentObject = function (namesArr, commentsArr, count) {
 
 var generateCommentsArray = function (min, max) {
   var userComments = [];
+  min = min || 0;
 
   if (max) {
-    min = min || 0;
-
     for (var i = 0; i < Math.round(min - 0.5 + Math.random() * (max - min + 1)); i++) {
       userComments[i] = [
         generateCommentObject(NAMES, COMMENTS, AVATARS_COUNT)
@@ -68,9 +75,10 @@ var generateCommentsArray = function (min, max) {
 };
 
 var generateUsersPhotos = function (min, max, count) {
-  if (max & count) {
-    min = min || 0;
+  min = min || 0;
+  count = count || PHOTOS_COUNT;
 
+  if (max) {
     for (var i = 0; i < count; i++) {
       usersPhotos[i] = {
         url: 'photos/' + (i + 1) + '.jpg',
@@ -132,6 +140,14 @@ var onPopupEscPress = function (evt) {
   }
 };
 
+var hideSlider = function (evt) {
+  if (evt.target === originImgInput) {
+    effectSlider.classList.add('hidden');
+  } else {
+    effectSlider.classList.remove('hidden');
+  }
+};
+
 var getNamberFromInputValue = function (element) {
   var numberArr = [];
   var number = 0;
@@ -145,9 +161,9 @@ var getNamberFromInputValue = function (element) {
 };
 
 var raiseInputValueWithPercent = function (element, number, minValue, maxValue, step) {
-  minValue = minValue || 5;
-  maxValue = maxValue || 100;
-  step = step || 5;
+  minValue = minValue || MIN_PERCENT_INPUT_VALUE;
+  maxValue = maxValue || MAX_PERCENT_INPUT_VALUE;
+  step = step || STEP_PERCENT_INPUT_VALUE;
   number = number || minValue;
 
   if (element) {
@@ -160,9 +176,9 @@ var raiseInputValueWithPercent = function (element, number, minValue, maxValue, 
 };
 
 var lowerInputValueWithPercent = function (element, number, minValue, maxValue, step) {
-  minValue = minValue || 5;
-  maxValue = maxValue || 100;
-  step = step || 5;
+  minValue = minValue || MIN_PERCENT_INPUT_VALUE;
+  maxValue = maxValue || MAX_PERCENT_INPUT_VALUE;
+  step = step || STEP_PERCENT_INPUT_VALUE;
   number = number || maxValue;
 
   if (element) {
@@ -175,13 +191,75 @@ var lowerInputValueWithPercent = function (element, number, minValue, maxValue, 
 };
 
 var changeImgScale = function (element, number) {
-  number = number || 100;
+  number = number || MAX_PERCENT_INPUT_VALUE;
 
   if (element) {
     element.querySelector('img').style.transform = 'scale(' + number / 100 + ')';
   }
 };
 
+var getClassPrefix = function (evt) {
+  var prefixArr = evt.target.id.split('-');
+
+  return prefixArr[1];
+};
+
+var addImgClass = function (evt, element) {
+  var prefix = getClassPrefix(evt);
+  element.className = 'img-upload__preview';
+  element.style.filter = '';
+
+  if (prefix !== 'none' && prefix !== undefined) {
+    element.classList.add('effects__preview--' + prefix);
+  }
+};
+
+var getBlockLeftPosition = function (element) {
+  return element.getBoundingClientRect().left;
+};
+
+var getLengthBlock = function (element) {
+  var positionSliderLineLeft = getBlockLeftPosition(element);
+  var positionSliderLineRight = element.getBoundingClientRect().right;
+  var lengthSliderLine = element ? positionSliderLineRight - positionSliderLineLeft : 0;
+
+  return lengthSliderLine;
+};
+
+var getProportion = function (evt, element) {
+  var offsetpositionX = evt.clientX - getBlockLeftPosition(element);
+
+  return offsetpositionX * 100 / getLengthBlock(element);
+};
+
+var changeSaturationValue = function (evt) {
+  effectsLavelValue.value = Math.round(getProportion(evt, effectSliderLine));
+};
+
+var resetSaturationValue = function () {
+  effectsLavelValue.value = '100';
+};
+
+var changeBlockFilterStyle = function (evt, element, elementScale) {
+  var prefixArr = element.className.split('--');
+  var prefix = prefixArr[1];
+
+  element.style.filter = '';
+
+  if (prefix === 'chrome') {
+    element.style.filter = 'grayscale(' + Math.round(getProportion(evt, elementScale)) / 100 + ')';
+  } else if (prefix === 'sepia') {
+    element.style.filter = 'sepia(' + Math.round(getProportion(evt, elementScale)) / 100 + ')';
+  } else if (prefix === 'marvin') {
+    element.style.filter = 'invert(' + Math.round(getProportion(evt, elementScale)) + '%)';
+  } else if (prefix === 'phobos') {
+    element.style.filter = 'blur(' + Math.floor(getProportion(evt, elementScale) / 25) + 'px)';
+  } else if (prefix === 'heat') {
+    element.style.filter = 'brightness(' + Math.ceil(getProportion(evt, elementScale) / 34) + ')';
+  } else {
+    element.style.filter = 'none';
+  }
+};
 
 usersPhotos = generateUsersPhotos(MIN_RANDOM_VALUE, MAX_RANDOM_VALUE, PHOTOS_COUNT);
 usersPhotosSection.appendChild(addUsersPhotos(usersPhotos));
@@ -207,4 +285,13 @@ zoomOutImg.addEventListener('click', function () {
   changeImgScale(imgPreview, getNamberFromInputValue(zoomValueImg));
 });
 
+effectSliderLine.addEventListener('mouseup', function (evt) {
+  changeSaturationValue(evt);
+  changeBlockFilterStyle(evt, imgPreview, effectSliderLine);
+});
 
+effectsListImg.addEventListener('click', function (evt) {
+  addImgClass(evt, imgPreview);
+  hideSlider(evt);
+  resetSaturationValue();
+});
