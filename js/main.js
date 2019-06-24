@@ -8,6 +8,9 @@ var MAX_RANDOM_VALUE = 200;
 var MIN_PERCENT_INPUT_VALUE = 25;
 var MAX_PERCENT_INPUT_VALUE = 100;
 var STEP_PERCENT_INPUT_VALUE = 25;
+var DIVISOR_ON_THREE_PARTS = 34;
+var DIVISOR_ON_FOUR_PARTS = 25;
+var MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS = 100;
 var NAMES = ['Виктор', 'Елена', 'Катя', 'Павел', 'Олеся', 'Инна', 'Алла'];
 var COMMENTS = [
   'Всё отлично!',
@@ -202,7 +205,7 @@ var changeImgScale = function (element, number) {
   number = number || MAX_PERCENT_INPUT_VALUE;
 
   if (element) {
-    element.querySelector('img').style.transform = 'scale(' + number / 100 + ')';
+    element.querySelector('img').style.transform = 'scale(' + number / MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
   }
 };
 
@@ -265,7 +268,7 @@ var getProportion = function (evt, element) {
 
   if (element) {
     offsetpositionX = evt.clientX - getBlockLeftPosition(element);
-    proportion = (offsetpositionX / getLengthBlock(element)) * 100;
+    proportion = (offsetpositionX / getLengthBlock(element)) * MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
   }
 
   return proportion;
@@ -290,15 +293,15 @@ var changeBlockFilterStyle = function (evt, element, scaleElement) {
     element.style.filter = '';
 
     if (prefix === 'chrome') {
-      element.style.filter = 'grayscale(' + Math.round(getProportion(evt, scaleElement)) / 100 + ')';
+      element.style.filter = 'grayscale(' + Math.round(getProportion(evt, scaleElement)) / MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
     } else if (prefix === 'sepia') {
-      element.style.filter = 'sepia(' + Math.round(getProportion(evt, scaleElement)) / 100 + ')';
+      element.style.filter = 'sepia(' + Math.round(getProportion(evt, scaleElement)) / MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
     } else if (prefix === 'marvin') {
       element.style.filter = 'invert(' + Math.round(getProportion(evt, scaleElement)) + '%)';
     } else if (prefix === 'phobos') {
-      element.style.filter = 'blur(' + Math.floor(getProportion(evt, scaleElement) / 25) + 'px)';
+      element.style.filter = 'blur(' + Math.floor(getProportion(evt, scaleElement) / DIVISOR_ON_FOUR_PARTS) + 'px)';
     } else if (prefix === 'heat') {
-      element.style.filter = 'brightness(' + Math.ceil(getProportion(evt, scaleElement) / 34) + ')';
+      element.style.filter = 'brightness(' + Math.ceil(getProportion(evt, scaleElement) / DIVISOR_ON_THREE_PARTS) + ')';
     } else {
       element.style.filter = 'none';
     }
