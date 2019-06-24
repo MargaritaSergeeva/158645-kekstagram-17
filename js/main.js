@@ -27,11 +27,10 @@ var zoomInImg = uploadImage.querySelector('.scale__control--bigger');
 var zoomValueImg = uploadImage.querySelector('.scale__control--value');
 var imgPreview = uploadImage.querySelector('.img-upload__preview');
 var effectsListImg = uploadImage.querySelector('.effects__list');
-var effectSlider = uploadImage.querySelector('.effect-level');
-var effectSliderLine = effectSlider.querySelector('.effect-level__line');
-var effectsSliderPin = effectSlider.querySelector('.effect-level__pin');
-var effectsLavelValue = effectSlider.querySelector('.effect-level__value');
-var originImgInput = uploadImage.querySelector('#effect-none');
+var effectSliderLine = uploadImage.querySelector('.effect-level__line');
+var effectsSliderPin = uploadImage.querySelector('.effect-level__pin');
+var effectsLavelValue = uploadImage.querySelector('.effect-level__value');
+
 
 var usersPhotos = [];
 
@@ -140,7 +139,16 @@ var onPopupEscPress = function (evt) {
   }
 };
 
+var resetInputValue = function (input) {
+  if (input) {
+    input.value = '';
+  }
+};
+
 var hideSlider = function (evt) {
+  var originImgInput = uploadImage.querySelector('#effect-none');
+  var effectSlider = uploadImage.querySelector('.effect-level');
+
   if (evt.target === originImgInput) {
     effectSlider.classList.add('hidden');
   } else {
@@ -206,30 +214,61 @@ var getClassPrefix = function (evt) {
 
 var addImgClass = function (evt, element) {
   var prefix = getClassPrefix(evt);
-  element.className = 'img-upload__preview';
-  element.style.filter = '';
 
-  if (prefix !== 'none' && prefix !== undefined) {
-    element.classList.add('effects__preview--' + prefix);
+  if (element) {
+    element.className = 'img-upload__preview';
+    element.style.filter = '';
+
+    if (prefix !== 'none' && prefix !== undefined) {
+      element.classList.add('effects__preview--' + prefix);
+    }
   }
 };
 
 var getBlockLeftPosition = function (element) {
-  return element.getBoundingClientRect().left;
+  var leftPosition = '';
+
+  if (element) {
+    leftPosition = element.getBoundingClientRect().left;
+  }
+
+  return leftPosition;
+};
+
+var getBlockRightPosition = function (element) {
+  var rightPosition = '';
+
+  if (element) {
+    rightPosition = element.getBoundingClientRect().right;
+  }
+
+  return rightPosition;
 };
 
 var getLengthBlock = function (element) {
-  var positionSliderLineLeft = getBlockLeftPosition(element);
-  var positionSliderLineRight = element.getBoundingClientRect().right;
-  var lengthSliderLine = element ? positionSliderLineRight - positionSliderLineLeft : 0;
+  var positionSliderLineLeft = 0;
+  var positionSliderLineRight = 0;
+  var lengthSliderLine = 0;
+
+  if (element) {
+    positionSliderLineLeft = getBlockLeftPosition(element);
+    positionSliderLineRight = getBlockRightPosition(element);
+    lengthSliderLine = positionSliderLineRight - positionSliderLineLeft;
+  }
 
   return lengthSliderLine;
 };
 
 var getProportion = function (evt, element) {
-  var offsetpositionX = evt.clientX - getBlockLeftPosition(element);
+  var offsetpositionX = 0;
+  var proportion = 0;
 
-  return offsetpositionX * 100 / getLengthBlock(element);
+  if (element) {
+    offsetpositionX = evt.clientX - getBlockLeftPosition(element);
+    proportion = (offsetpositionX / getLengthBlock(element)) * 100;
+  }
+
+  return proportion;
 };
 
 var changeSaturationValue = function (evt) {
@@ -240,24 +279,29 @@ var resetSaturationValue = function () {
   effectsLavelValue.value = '100';
 };
 
-var changeBlockFilterStyle = function (evt, element, elementScale) {
-  var prefixArr = element.className.split('--');
-  var prefix = prefixArr[1];
+var changeBlockFilterStyle = function (evt, element, scaleElement) {
+  var prefixArr = [];
+  var prefix = '';
 
-  element.style.filter = '';
+  if (element && scaleElement) {
+    prefixArr = element.className.split('--');
+    prefix = prefixArr[1];
 
-  if (prefix === 'chrome') {
-    element.style.filter = 'grayscale(' + Math.round(getProportion(evt, elementScale)) / 100 + ')';
-  } else if (prefix === 'sepia') {
-    element.style.filter = 'sepia(' + Math.round(getProportion(evt, elementScale)) / 100 + ')';
-  } else if (prefix === 'marvin') {
-    element.style.filter = 'invert(' + Math.round(getProportion(evt, elementScale)) + '%)';
-  } else if (prefix === 'phobos') {
-    element.style.filter = 'blur(' + Math.floor(getProportion(evt, elementScale) / 25) + 'px)';
-  } else if (prefix === 'heat') {
-    element.style.filter = 'brightness(' + Math.ceil(getProportion(evt, elementScale) / 34) + ')';
-  } else {
-    element.style.filter = 'none';
+    element.style.filter = '';
+
+    if (prefix === 'chrome') {
+      element.style.filter = 'grayscale(' + Math.round(getProportion(evt, scaleElement)) / 100 + ')';
+    } else if (prefix === 'sepia') {
+      element.style.filter = 'sepia(' + Math.round(getProportion(evt, scaleElement)) / 100 + ')';
+    } else if (prefix === 'marvin') {
+      element.style.filter = 'invert(' + Math.round(getProportion(evt, scaleElement)) + '%)';
+    } else if (prefix === 'phobos') {
+      element.style.filter = 'blur(' + Math.floor(getProportion(evt, scaleElement) / 25) + 'px)';
+    } else if (prefix === 'heat') {
+      element.style.filter = 'brightness(' + Math.ceil(getProportion(evt, scaleElement) / 34) + ')';
+    } else {
+      element.style.filter = 'none';
+    }
   }
 };
 
@@ -271,8 +315,8 @@ openUploadImage.addEventListener('change', function () {
 
 closeUploadImage.addEventListener('click', function () {
   closeElement(uploadImage);
+  resetInputValue(openUploadImage);
   document.removeEventListener('keydown', onPopupEscPress);
-  openUploadImage.value = '';
 });
 
 zoomInImg.addEventListener('click', function () {
@@ -285,7 +329,7 @@ zoomOutImg.addEventListener('click', function () {
   changeImgScale(imgPreview, getNamberFromInputValue(zoomValueImg));
 });
 
-effectSliderLine.addEventListener('mouseup', function (evt) {
+effectsSliderPin.addEventListener('mouseup', function (evt) {
   changeSaturationValue(evt);
   changeBlockFilterStyle(evt, imgPreview, effectSliderLine);
 });
