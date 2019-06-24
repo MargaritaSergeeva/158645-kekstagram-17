@@ -188,21 +188,6 @@ var changeInputValueWithPercent = function (element, number, minValue, maxValue,
   }
 };
 
-// var lowerInputValueWithPercent = function (element, number, minValue, maxValue, step) {
-//   minValue = minValue || MIN_PERCENT_INPUT_VALUE;
-//   maxValue = maxValue || MAX_PERCENT_INPUT_VALUE;
-//   step = step || STEP_PERCENT_INPUT_VALUE;
-//   number = number || maxValue;
-
-//   if (element) {
-//     if (number > minValue && number <= maxValue) {
-//       number -= step;
-//     }
-
-//     element.value = number + '%';
-//   }
-// };
-
 var changeImgScale = function (element, number) {
   number = number || MAX_PERCENT_INPUT_VALUE;
 
