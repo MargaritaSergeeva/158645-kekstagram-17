@@ -34,9 +34,7 @@ var effectSliderLine = uploadImage.querySelector('.effect-level__line');
 var effectsSliderPin = uploadImage.querySelector('.effect-level__pin');
 var effectsLavelValue = uploadImage.querySelector('.effect-level__value');
 
-
 var usersPhotos = [];
-
 
 var getRandomValue = function (arr) {
   if (arr.length > 0) {
@@ -153,53 +151,57 @@ var hideSlider = function (evt) {
   var effectSlider = uploadImage.querySelector('.effect-level');
 
   if (evt.target === originImgInput) {
-    effectSlider.classList.add('hidden');
+    closeElement(effectSlider);
   } else {
-    effectSlider.classList.remove('hidden');
+    showElement(effectSlider);
   }
 };
 
 var getNamberFromInputValue = function (element) {
-  var numberArr = [];
   var number = 0;
 
   if (element) {
-    numberArr = element.value.split('%');
-    number = +numberArr[0];
+    number = parseInt(element.value, 10);
   }
 
   return number;
 };
 
-var raiseInputValueWithPercent = function (element, number, minValue, maxValue, step) {
+var changeInputValueWithPercent = function (element, number, minValue, maxValue, step, raise) {
   minValue = minValue || MIN_PERCENT_INPUT_VALUE;
   maxValue = maxValue || MAX_PERCENT_INPUT_VALUE;
   step = step || STEP_PERCENT_INPUT_VALUE;
   number = number || minValue;
 
   if (element) {
-    if (number >= minValue && number < maxValue) {
-      number += step;
+    if (raise) {
+      if (number >= minValue && number < maxValue) {
+        number += step;
+      }
+    } else {
+      if (number > minValue && number <= maxValue) {
+        number -= step;
+      }
     }
 
     element.value = number + '%';
   }
 };
 
-var lowerInputValueWithPercent = function (element, number, minValue, maxValue, step) {
-  minValue = minValue || MIN_PERCENT_INPUT_VALUE;
-  maxValue = maxValue || MAX_PERCENT_INPUT_VALUE;
-  step = step || STEP_PERCENT_INPUT_VALUE;
-  number = number || maxValue;
+// var lowerInputValueWithPercent = function (element, number, minValue, maxValue, step) {
+//   minValue = minValue || MIN_PERCENT_INPUT_VALUE;
+//   maxValue = maxValue || MAX_PERCENT_INPUT_VALUE;
+//   step = step || STEP_PERCENT_INPUT_VALUE;
+//   number = number || maxValue;
 
-  if (element) {
-    if (number > minValue && number <= maxValue) {
-      number -= step;
-    }
+//   if (element) {
+//     if (number > minValue && number <= maxValue) {
+//       number -= step;
+//     }
 
-    element.value = number + '%';
-  }
-};
+//     element.value = number + '%';
+//   }
+// };
 
 var changeImgScale = function (element, number) {
   number = number || MAX_PERCENT_INPUT_VALUE;
@@ -323,12 +325,12 @@ closeUploadImage.addEventListener('click', function () {
 });
 
 zoomInImg.addEventListener('click', function () {
-  raiseInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE);
+  changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE, true);
   changeImgScale(imgPreview, getNamberFromInputValue(zoomValueImg));
 });
 
 zoomOutImg.addEventListener('click', function () {
-  lowerInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE);
+  changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE, false);
   changeImgScale(imgPreview, getNamberFromInputValue(zoomValueImg));
 });
 
