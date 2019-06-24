@@ -158,13 +158,7 @@ var hideSlider = function (evt) {
 };
 
 var getNamberFromInputValue = function (element) {
-  var number = 0;
-
-  if (element) {
-    number = parseInt(element.value, 10);
-  }
-
-  return number;
+  return element ? parseInt(element.value, 10) : 0;
 };
 
 var changeInputValueWithPercent = function (element, number, minValue, maxValue, step, raise) {
