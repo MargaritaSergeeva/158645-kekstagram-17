@@ -33,6 +33,7 @@ var effectsListImg = uploadImage.querySelector('.effects__list');
 var effectSliderLine = uploadImage.querySelector('.effect-level__line');
 var effectsSliderPin = uploadImage.querySelector('.effect-level__pin');
 var effectsLavelValue = uploadImage.querySelector('.effect-level__value');
+var descriptionImg = uploadImage.querySelector('.text__description');
 
 var usersPhotos = [];
 
@@ -137,6 +138,7 @@ var closeElement = function (element) {
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closeElement(uploadImage);
+    resetInputValue(openUploadImage);
   }
 };
 
@@ -322,4 +324,12 @@ effectsListImg.addEventListener('click', function (evt) {
   addImgClass(evt, imgPreview);
   hideSlider(evt);
   resetSaturationValue();
+});
+
+descriptionImg.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+
+descriptionImg.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
 });
