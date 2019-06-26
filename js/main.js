@@ -310,6 +310,7 @@ var changeBlockFilterStyle = function (evt, element, scaleElement) {
 
 var moveBlockX = function (element, scaleElement, changeElement) {
   if (element && scaleElement && changeElement) {
+    var isDragged = false;
     var startCoordX = getBlockLeftPosition(element) + (element.getBoundingClientRect().width / 2);
 
     var onMouseMove = function (moveEvt) {
@@ -318,6 +319,8 @@ var moveBlockX = function (element, scaleElement, changeElement) {
       var leftLimit = getBlockLeftPosition(scaleElement);
       var rightLimit = getBlockRightPosition(scaleElement);
       var shiftX = startCoordX - moveEvt.clientX;
+
+      isDragged = true;
 
       if (moveEvt.clientX >= leftLimit && moveEvt.clientX <= rightLimit) {
         startCoordX = moveEvt.clientX;
@@ -329,8 +332,11 @@ var moveBlockX = function (element, scaleElement, changeElement) {
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      changeSaturationValue(upEvt);
-      changeBlockFilterStyle(upEvt, changeElement, scaleElement);
+
+      if (isDragged) {
+        changeSaturationValue(upEvt);
+        changeBlockFilterStyle(upEvt, changeElement, scaleElement);
+      }
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
