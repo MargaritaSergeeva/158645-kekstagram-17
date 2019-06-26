@@ -32,6 +32,7 @@ var imgPreview = uploadImage.querySelector('.img-upload__preview');
 var effectsListImg = uploadImage.querySelector('.effects__list');
 var effectSliderLine = uploadImage.querySelector('.effect-level__line');
 var effectsSliderPin = uploadImage.querySelector('.effect-level__pin');
+var effectsSliderDepthScale = uploadImage.querySelector('.effect-level__depth');
 var effectsLavelValue = uploadImage.querySelector('.effect-level__value');
 var descriptionImg = uploadImage.querySelector('.text__description');
 
@@ -93,9 +94,7 @@ var generateUsersPhotos = function (min, max, count) {
 };
 
 var createUserPhoto = function (photo) {
-  var userPhotoTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
+  var userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var userPhotoElement = userPhotoTemplate.cloneNode(true);
 
   if (Object.keys(photo).length > 0) {
@@ -252,6 +251,8 @@ var getProportion = function (evt, element) {
   if (element) {
     offsetpositionX = evt.clientX - getBlockLeftPosition(element);
     proportion = (offsetpositionX / getLengthBlock(element)) * MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
+    proportion = (proportion < 0) ? 0 : proportion;
+    proportion = (proportion > 100) ? 100 : proportion;
   }
 
   return proportion;
@@ -262,12 +263,28 @@ var changeSaturationValue = function (evt) {
 };
 
 var resetSaturationValue = function () {
-  effectsLavelValue.value = '100';
+  effectsLavelValue.value = MAX_PERCENT_INPUT_VALUE;
+};
+
+var changeSliderDepthScale = function (evt, element, scaleElement) {
+  element.style.width = Math.round(getProportion(evt, scaleElement)) + '%';
+};
+
+var resetSliderDepthScale = function (element) {
+  element.style.width = '';
+};
+
+var resetBlockPosition = function (element) {
+  if (element) {
+    element.style.left = '';
+    element.style.top = '';
+  }
 };
 
 var changeBlockFilterStyle = function (evt, element, scaleElement) {
   var prefixArr = [];
   var prefix = '';
+  var proportion = getProportion(evt, scaleElement);
 
   if (element && scaleElement) {
     prefixArr = element.className.split('--');
@@ -276,18 +293,51 @@ var changeBlockFilterStyle = function (evt, element, scaleElement) {
     element.style.filter = '';
 
     if (prefix === 'chrome') {
-      element.style.filter = 'grayscale(' + Math.round(getProportion(evt, scaleElement)) / MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
+      element.style.filter = 'grayscale(' + Math.round(proportion) / MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
     } else if (prefix === 'sepia') {
-      element.style.filter = 'sepia(' + Math.round(getProportion(evt, scaleElement)) / MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
+      element.style.filter = 'sepia(' + Math.round(proportion) / MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
     } else if (prefix === 'marvin') {
-      element.style.filter = 'invert(' + Math.round(getProportion(evt, scaleElement)) + '%)';
+      element.style.filter = 'invert(' + Math.round(proportion) + '%)';
     } else if (prefix === 'phobos') {
-      element.style.filter = 'blur(' + Math.floor(getProportion(evt, scaleElement) / DIVISOR_ON_FOUR_PARTS) + 'px)';
+      element.style.filter = (proportion !== 100) ? 'blur(' + Math.floor(proportion / DIVISOR_ON_FOUR_PARTS) + 'px)' : 'blur(3px)';
     } else if (prefix === 'heat') {
-      element.style.filter = 'brightness(' + Math.ceil(getProportion(evt, scaleElement) / DIVISOR_ON_THREE_PARTS) + ')';
+      element.style.filter = (proportion !== 0) ? 'brightness(' + Math.ceil(proportion / DIVISOR_ON_THREE_PARTS) + ')' : 'brightness(1)';
     } else {
       element.style.filter = 'none';
     }
+  }
+};
+
+var moveBlockX = function (element, scaleElement, changeElement) {
+  if (element && scaleElement && changeElement) {
+    var startCoordX = getBlockLeftPosition(element) + (element.getBoundingClientRect().width / 2);
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var leftLimit = getBlockLeftPosition(scaleElement);
+      var rightLimit = getBlockRightPosition(scaleElement);
+      var shiftX = startCoordX - moveEvt.clientX;
+
+      if (moveEvt.clientX >= leftLimit && moveEvt.clientX <= rightLimit) {
+        startCoordX = moveEvt.clientX;
+
+        element.style.left = (element.offsetLeft - shiftX) + 'px';
+        changeSliderDepthScale(moveEvt, effectsSliderDepthScale, effectSliderLine);
+      }
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      changeSaturationValue(upEvt);
+      changeBlockFilterStyle(upEvt, changeElement, scaleElement);
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   }
 };
 
@@ -315,15 +365,17 @@ zoomOutImg.addEventListener('click', function () {
   changeImgScale(imgPreview, getNamberFromInputValue(zoomValueImg));
 });
 
-effectsSliderPin.addEventListener('mouseup', function (evt) {
-  changeSaturationValue(evt);
-  changeBlockFilterStyle(evt, imgPreview, effectSliderLine);
+effectsSliderPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  moveBlockX(effectsSliderPin, effectSliderLine, imgPreview);
 });
 
 effectsListImg.addEventListener('click', function (evt) {
   addImgClass(evt, imgPreview);
   hideSlider(evt);
   resetSaturationValue();
+  resetBlockPosition(effectsSliderPin);
+  resetSliderDepthScale(effectsSliderDepthScale);
 });
 
 descriptionImg.addEventListener('focus', function () {
