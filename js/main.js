@@ -308,26 +308,31 @@ var changeBlockFilterStyle = function (evt, element, scaleElement) {
   }
 };
 
-var moveBlockX = function (element, scaleElement, changeElement) {
+var changePositionBlockX = function (evt, element, scaleElement) {
+  var startCoordX = getBlockLeftPosition(element) + (element.getBoundingClientRect().width / 2);
+  var leftLimit = getBlockLeftPosition(scaleElement);
+  var rightLimit = getBlockRightPosition(scaleElement);
+  var shiftX = startCoordX - evt.clientX;
+
+  if (evt.clientX >= leftLimit && evt.clientX <= rightLimit) {
+    startCoordX = evt.clientX;
+
+    element.style.left = (element.offsetLeft - shiftX) + 'px';
+  }
+};
+
+var mouseMoveBlockX = function (element, scaleElement, changeElement, sliderDepthScaleElement) {
   if (element && scaleElement && changeElement) {
     var isDragged = false;
-    var startCoordX = getBlockLeftPosition(element) + (element.getBoundingClientRect().width / 2);
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var leftLimit = getBlockLeftPosition(scaleElement);
-      var rightLimit = getBlockRightPosition(scaleElement);
-      var shiftX = startCoordX - moveEvt.clientX;
-
       isDragged = true;
 
-      if (moveEvt.clientX >= leftLimit && moveEvt.clientX <= rightLimit) {
-        startCoordX = moveEvt.clientX;
-
-        element.style.left = (element.offsetLeft - shiftX) + 'px';
-        changeSliderDepthScale(moveEvt, effectsSliderDepthScale, effectSliderLine);
-      }
+      changePositionBlockX(moveEvt, element, scaleElement);
+      changeSliderDepthScale(moveEvt, sliderDepthScaleElement, scaleElement);
+      changeBlockFilterStyle(moveEvt, changeElement, scaleElement);
     };
 
     var onMouseUp = function (upEvt) {
@@ -335,7 +340,6 @@ var moveBlockX = function (element, scaleElement, changeElement) {
 
       if (isDragged) {
         changeSaturationValue(upEvt);
-        changeBlockFilterStyle(upEvt, changeElement, scaleElement);
       }
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -373,7 +377,15 @@ zoomOutImg.addEventListener('click', function () {
 
 effectsSliderPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
-  moveBlockX(effectsSliderPin, effectSliderLine, imgPreview);
+  mouseMoveBlockX(effectsSliderPin, effectSliderLine, imgPreview, effectsSliderDepthScale);
+});
+
+effectSliderLine.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  changePositionBlockX(evt, effectsSliderPin, effectSliderLine);
+  changeSliderDepthScale(evt, effectsSliderDepthScale, effectSliderLine);
+  changeBlockFilterStyle(evt, imgPreview, effectSliderLine);
+  changeSaturationValue(evt);
 });
 
 effectsListImg.addEventListener('click', function (evt) {
