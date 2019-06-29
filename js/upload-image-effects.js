@@ -34,8 +34,8 @@
     var prefix = getClassPrefix(evt);
 
     if (element) {
-      element.className = 'img-upload__preview';
-      element.style.filter = '';
+      window.utils.assignElementClass(element, 'img-upload__preview');
+      window.utils.resetElementStyle(element, 'filter');
 
       if (prefix !== 'none' && prefix !== undefined) {
         element.classList.add('effects__preview--' + prefix);
@@ -94,7 +94,7 @@
       prefixArr = element.className.split('--');
       prefix = prefixArr[1];
 
-      element.style.filter = '';
+      window.utils.resetElementStyle(element, 'filter');
 
       switch (prefix) {
         case 'chrome':

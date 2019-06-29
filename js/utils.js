@@ -45,6 +45,18 @@
       }
     },
 
+    resetElementStyle: function (element, selector) {
+      if (element) {
+        element.style[selector] = '';
+      }
+    },
+
+    assignElementClass: function (element, elementClass) {
+      if (element) {
+        element.className = elementClass;
+      }
+    },
+
     getBlockLeftPosition: function (element) {
       var leftPosition = '';
 
