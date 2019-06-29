@@ -42,37 +42,15 @@
   };
 
   var getBlockLeftPosition = function (element) {
-    var leftPosition = '';
-
-    if (element) {
-      leftPosition = element.getBoundingClientRect().left;
-    }
-
-    return leftPosition;
+    return element ? element.getBoundingClientRect().left : '';
   };
 
   var getBlockRightPosition = function (element) {
-    var rightPosition = '';
-
-    if (element) {
-      rightPosition = element.getBoundingClientRect().right;
-    }
-
-    return rightPosition;
+    return element ? element.getBoundingClientRect().right : '';
   };
 
   var getLengthBlock = function (element) {
-    var positionSliderLineLeft = 0;
-    var positionSliderLineRight = 0;
-    var lengthSliderLine = 0;
-
-    if (element) {
-      positionSliderLineLeft = getBlockLeftPosition(element);
-      positionSliderLineRight = getBlockRightPosition(element);
-      lengthSliderLine = positionSliderLineRight - positionSliderLineLeft;
-    }
-
-    return lengthSliderLine;
+    return element ? getBlockRightPosition(element) - getBlockLeftPosition(element) : '';
   };
 
   var getProportion = function (evt, element) {
