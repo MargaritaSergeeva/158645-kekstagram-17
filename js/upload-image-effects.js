@@ -96,18 +96,24 @@
 
       element.style.filter = '';
 
-      if (prefix === 'chrome') {
-        element.style.filter = 'grayscale(' + Math.round(proportion) / window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
-      } else if (prefix === 'sepia') {
-        element.style.filter = 'sepia(' + Math.round(proportion) / window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
-      } else if (prefix === 'marvin') {
-        element.style.filter = 'invert(' + Math.round(proportion) + '%)';
-      } else if (prefix === 'phobos') {
-        element.style.filter = (proportion !== MAX_PROPORTION) ? 'blur(' + Math.floor(proportion / DIVISOR_ON_FOUR_PARTS) + 'px)' : 'blur(3px)';
-      } else if (prefix === 'heat') {
-        element.style.filter = (proportion !== MIN_PROPORTION) ? 'brightness(' + Math.ceil(proportion / DIVISOR_ON_THREE_PARTS) + ')' : 'brightness(1)';
-      } else {
-        element.style.filter = 'none';
+      switch (prefix) {
+        case 'chrome':
+          element.style.filter = 'grayscale(' + Math.round(proportion) / window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
+          break;
+        case 'sepia':
+          element.style.filter = 'sepia(' + Math.round(proportion) / window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
+          break;
+        case 'marvin':
+          element.style.filter = 'invert(' + Math.round(proportion) + '%)';
+          break;
+        case 'phobos':
+          element.style.filter = (proportion !== MAX_PROPORTION) ? 'blur(' + Math.floor(proportion / DIVISOR_ON_FOUR_PARTS) + 'px)' : 'blur(3px)';
+          break;
+        case 'heat':
+          element.style.filter = (proportion !== MIN_PROPORTION) ? 'brightness(' + Math.ceil(proportion / DIVISOR_ON_THREE_PARTS) + ')' : 'brightness(1)';
+          break;
+        default:
+          element.style.filter = 'none';
       }
     }
   };
