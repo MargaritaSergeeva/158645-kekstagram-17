@@ -3,6 +3,8 @@
 (function () {
   var DIVISOR_ON_THREE_PARTS = 34;
   var DIVISOR_ON_FOUR_PARTS = 25;
+  var MIN_PROPORTION = 0;
+  var MAX_PROPORTION = 100;
 
   var effectsListImg = window.variables.uploadImage.querySelector('.effects__list');
   var effectSliderLine = window.variables.uploadImage.querySelector('.effect-level__line');
@@ -60,8 +62,8 @@
     if (element) {
       offsetpositionX = evt.clientX - getBlockLeftPosition(element);
       proportion = (offsetpositionX / getLengthBlock(element)) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
-      proportion = (proportion < 0) ? 0 : proportion;
-      proportion = (proportion > 100) ? 100 : proportion;
+      proportion = (proportion < MIN_PROPORTION) ? 0 : proportion;
+      proportion = (proportion > MAX_PROPORTION) ? 100 : proportion;
     }
 
     return proportion;
@@ -101,9 +103,9 @@
       } else if (prefix === 'marvin') {
         element.style.filter = 'invert(' + Math.round(proportion) + '%)';
       } else if (prefix === 'phobos') {
-        element.style.filter = (proportion !== 100) ? 'blur(' + Math.floor(proportion / DIVISOR_ON_FOUR_PARTS) + 'px)' : 'blur(3px)';
+        element.style.filter = (proportion !== MAX_PROPORTION) ? 'blur(' + Math.floor(proportion / DIVISOR_ON_FOUR_PARTS) + 'px)' : 'blur(3px)';
       } else if (prefix === 'heat') {
-        element.style.filter = (proportion !== 0) ? 'brightness(' + Math.ceil(proportion / DIVISOR_ON_THREE_PARTS) + ')' : 'brightness(1)';
+        element.style.filter = (proportion !== MIN_PROPORTION) ? 'brightness(' + Math.ceil(proportion / DIVISOR_ON_THREE_PARTS) + ')' : 'brightness(1)';
       } else {
         element.style.filter = 'none';
       }
