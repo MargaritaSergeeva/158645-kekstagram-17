@@ -236,9 +236,22 @@
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
 
+  <!-- Сообщение с ошибкой при загрузке изображений на главной странице -->
+  <template id="error__start-page">
+    <section class="error">
+      <div class="error__inner">
+        <h2 class="error__title"></h2>
+        <div class="error__buttons">
+          <button type="button" class="error__button">ОК</button>
+        </div>
+      </div>
+    </section>
+  </template>
+
   <script src="js/constants.js"></script>
   <script src="js/variables.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/backend.js"></script>
   <script src="js/gallery.js"></script>
   <script src="js/upload-image-popup.js"></script>
   <script src="js/upload-image-zoom.js"></script>
