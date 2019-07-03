@@ -16,7 +16,7 @@
   var renderNewPhotos = function (photosArr) {
     var newUsersPhotos = photosArr
     .slice()
-    .sort(compareRandom)
+    .sort(window.utils.compareRandom)
     .slice(0, 10)
     .map(function (it) {
       return it;
@@ -31,20 +31,12 @@
     var discussedUsersPhotos = photosArr
     .slice()
     .sort(function (left, right) {
-      return compareNumbersGoDown(left.comments.length, right.comments.length);
+      return window.utils.compareNumbersGoDown(left.comments.length, right.comments.length);
     });
 
     window.debounce(function () {
       window.rendering.addUsersPhotos(discussedUsersPhotos);
     });
-  };
-
-  var addClassToElement = function (element, className) {
-    element.classList.add(className);
-  };
-
-  var removeClassFromElement = function (element, className) {
-    element.classList.remove(className);
   };
 
   window.variables.xhr.addEventListener('load', function () {
@@ -55,19 +47,22 @@
 
   popularPhotosFilterBtn.addEventListener('click', function () {
     renderPopularPhotos(window.variables.photos);
-    windowaddClassToElement(popularPhotosFilterBtn, 'img-filters__button--active');
-    removeClassFromElement(newPhotosFilterBtn, discussedPhotosFilterBtn);
+    window.utils.addClassToElement(popularPhotosFilterBtn, 'img-filters__button--active');
+    window.utils.removeClassFromElement(newPhotosFilterBtn, 'img-filters__button--active');
+    window.utils.removeClassFromElement(discussedPhotosFilterBtn, 'img-filters__button--active');
   });
 
   newPhotosFilterBtn.addEventListener('click', function () {
     renderNewPhotos(window.variables.photos);
-    addClassToElement(newPhotosFilterBtn);
-    removeClassFromElement(popularPhotosFilterBtn, discussedPhotosFilterBtn);
+    window.utils.addClassToElement(newPhotosFilterBtn, 'img-filters__button--active');
+    window.utils.removeClassFromElement(popularPhotosFilterBtn, 'img-filters__button--active');
+    window.utils.removeClassFromElement(discussedPhotosFilterBtn, 'img-filters__button--active');
   });
 
   discussedPhotosFilterBtn.addEventListener('click', function () {
     renderDiscussedPhotos(window.variables.photos);
-    addClassToElement(discussedPhotosFilterBtn);
-    removeClassFromElement(popularPhotosFilterBtn, newPhotosFilterBtn);
+    window.utils.addClassToElement(discussedPhotosFilterBtn, 'img-filters__button--active');
+    window.utils.removeClassFromElement(popularPhotosFilterBtn, 'img-filters__button--active');
+    window.utils.removeClassFromElement(newPhotosFilterBtn, 'img-filters__button--active');
   });
 })();

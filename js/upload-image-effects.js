@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  var DIVISOR_ON_THREE_PARTS = 34;
-  var DIVISOR_ON_FOUR_PARTS = 25;
-  var MIN_PROPORTION = 0;
-  var MAX_PROPORTION = 100;
+  var Proportion = {
+    MIN: 0,
+    MAX: 1
+  };
 
   var effectsListImg = window.variables.uploadImage.querySelector('.effects__list');
   var effectSliderLine = window.variables.uploadImage.querySelector('.effect-level__line');
@@ -34,7 +34,7 @@
     var prefix = getClassPrefix(evt);
 
     if (element) {
-      window.utils.assignElementClass(element, 'img-upload__preview');
+      window.utils.assignOneClassToElement(element, 'img-upload__preview');
       window.utils.resetElementStyle(element, 'filter');
 
       if (prefix !== 'none' && prefix !== undefined) {
@@ -43,16 +43,8 @@
     }
   };
 
-  var getBlockLeftPosition = function (element) {
-    return element ? element.getBoundingClientRect().left : '';
-  };
-
-  var getBlockRightPosition = function (element) {
-    return element ? element.getBoundingClientRect().right : '';
-  };
-
   var getLengthBlock = function (element) {
-    return element ? getBlockRightPosition(element) - getBlockLeftPosition(element) : '';
+    return element ? window.utils.getBlockRightPosition(element) - window.utils.getBlockLeftPosition(element) : '';
   };
 
   var getProportion = function (evt, element) {
@@ -60,17 +52,17 @@
     var proportion = 0;
 
     if (element) {
-      offsetpositionX = evt.clientX - getBlockLeftPosition(element);
-      proportion = (offsetpositionX / getLengthBlock(element)) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
-      proportion = (proportion < MIN_PROPORTION) ? 0 : proportion;
-      proportion = (proportion > MAX_PROPORTION) ? 100 : proportion;
+      offsetpositionX = evt.clientX - window.utils.getBlockLeftPosition(element);
+      proportion = (offsetpositionX / getLengthBlock(element)).toFixed(2);
+      proportion = (proportion < Proportion.MIN) ? 0 : proportion;
+      proportion = (proportion > Proportion.MAX) ? 1 : proportion;
     }
 
     return proportion;
   };
 
   var changeSaturationValue = function (evt) {
-    effectsLavelValue.value = Math.round(getProportion(evt, effectSliderLine));
+    effectsLavelValue.value = getProportion(evt, effectSliderLine) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
   };
 
   var resetSaturationValue = function () {
@@ -78,7 +70,7 @@
   };
 
   var changeSliderDepthScale = function (evt, element, scaleElement) {
-    element.style.width = Math.round(getProportion(evt, scaleElement)) + '%';
+    element.style.width = getProportion(evt, scaleElement) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + '%';
   };
 
   var resetSliderDepthScale = function (element) {
@@ -86,42 +78,34 @@
   };
 
   var changeBlockFilterStyle = function (evt, element, scaleElement) {
-    var prefixArr = [];
-    var prefix = '';
+    var filterStylesMap = {
+      'chrome': ['grayscale', 0, 1, '', 1],
+      'sepia': ['sepia', 0, 1, '', 1],
+      'marvin': ['invert', 0, 100, '%', 0.01],
+      'phobos': ['blur', 0, 3, 'px', 0.34],
+      'heat': ['brightness', 1, 3, '', 0.5],
+    };
+    var prefixArr = element.className.split('--');
+    var prefix = prefixArr[1];
     var proportion = getProportion(evt, scaleElement);
 
-    if (element && scaleElement) {
-      prefixArr = element.className.split('--');
-      prefix = prefixArr[1];
+    window.utils.resetElementStyle(element, 'filter');
 
-      window.utils.resetElementStyle(element, 'filter');
-
-      switch (prefix) {
-        case 'chrome':
-          element.style.filter = 'grayscale(' + Math.round(proportion) / window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
-          break;
-        case 'sepia':
-          element.style.filter = 'sepia(' + Math.round(proportion) / window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS + ')';
-          break;
-        case 'marvin':
-          element.style.filter = 'invert(' + Math.round(proportion) + '%)';
-          break;
-        case 'phobos':
-          element.style.filter = (proportion !== MAX_PROPORTION) ? 'blur(' + Math.floor(proportion / DIVISOR_ON_FOUR_PARTS) + 'px)' : 'blur(3px)';
-          break;
-        case 'heat':
-          element.style.filter = (proportion !== MIN_PROPORTION) ? 'brightness(' + Math.ceil(proportion / DIVISOR_ON_THREE_PARTS) + ')' : 'brightness(1)';
-          break;
-        default:
-          element.style.filter = 'none';
+    if (prefix !== 'none') {
+      if (proportion !== Proportion.MAX) {
+        element.style.filter = filterStylesMap[prefix][0] + '(' + (proportion / filterStylesMap[prefix][4] + filterStylesMap[prefix][1]).toFixed(2) + filterStylesMap[prefix][3] + ')';
+      } else {
+        element.style.filter = filterStylesMap[prefix][0] + '(' + filterStylesMap[prefix][2] + filterStylesMap[prefix][3] + ')';
       }
+    } else {
+      element.style.filter = 'none';
     }
   };
 
   var changePositionBlockX = function (evt, element, scaleElement) {
-    var startCoordX = getBlockLeftPosition(element) + (element.getBoundingClientRect().width / 2);
-    var leftLimit = getBlockLeftPosition(scaleElement);
-    var rightLimit = getBlockRightPosition(scaleElement);
+    var startCoordX = window.utils.getBlockLeftPosition(element) + (element.getBoundingClientRect().width / 2);
+    var leftLimit = window.utils.getBlockLeftPosition(scaleElement);
+    var rightLimit = window.utils.getBlockRightPosition(scaleElement);
     var shiftX = startCoordX - evt.clientX;
 
     if (evt.clientX >= leftLimit && evt.clientX <= rightLimit) {

@@ -1,8 +1,10 @@
 'use strict';
 
 (function () {
-  var MIN_PERCENT_INPUT_VALUE = 25;
-  var STEP_PERCENT_INPUT_VALUE = 25;
+  var InputValue = {
+    MIN: 25,
+    STEP: 25
+  };
 
   var zoomOutImg = window.variables.uploadImage.querySelector('.scale__control--smaller');
   var zoomInImg = window.variables.uploadImage.querySelector('.scale__control--bigger');
@@ -14,9 +16,9 @@
   };
 
   var changeInputValueWithPercent = function (element, number, minValue, maxValue, step, raise) {
-    minValue = minValue || MIN_PERCENT_INPUT_VALUE;
+    minValue = minValue || InputValue.MIN;
     maxValue = maxValue || window.constants.MAX_PERCENT_INPUT_VALUE;
-    step = step || STEP_PERCENT_INPUT_VALUE;
+    step = step || InputValue.STEP;
     number = number || minValue;
 
     if (element) {
@@ -43,12 +45,12 @@
   };
 
   zoomInImg.addEventListener('click', function () {
-    changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, window.constants.MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE, true);
+    changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, true);
     changeImgScale(window.variables.imgPreview, getNamberFromInputValue(zoomValueImg));
   });
 
   zoomOutImg.addEventListener('click', function () {
-    changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), MIN_PERCENT_INPUT_VALUE, window.constants.MAX_PERCENT_INPUT_VALUE, STEP_PERCENT_INPUT_VALUE, false);
+    changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, false);
     changeImgScale(window.variables.imgPreview, getNamberFromInputValue(zoomValueImg));
   });
 })();

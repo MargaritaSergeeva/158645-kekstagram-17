@@ -20,7 +20,7 @@
     return {};
   };
 
-  var removeWizardElements = function () {
+  var removeUsersPhotos = function () {
     while (usersPhotosSection.childNodes.length !== childrenCount) {
       usersPhotosSection.removeChild(usersPhotosSection.lastChild);
     }
@@ -31,11 +31,13 @@
       var fragment = document.createDocumentFragment();
 
       if (photosArr.length > 0) {
-        photosArr.slice(0, MAX_PHOTOS_COUNT).forEach(function (it) {
+        photosArr
+        .slice(0, MAX_PHOTOS_COUNT)
+        .forEach(function (it) {
           fragment.appendChild(createUserPhoto(it));
         });
 
-        removeWizardElements();
+        removeUsersPhotos();
         usersPhotosSection.appendChild(fragment);
       }
 

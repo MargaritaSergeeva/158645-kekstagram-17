@@ -51,30 +51,18 @@
       }
     },
 
-    assignElementClass: function (element, elementClass) {
+    assignOneClassToElement: function (element, elementClass) {
       if (element) {
         element.className = elementClass;
       }
     },
 
     getBlockLeftPosition: function (element) {
-      var leftPosition = '';
-
-      if (element) {
-        leftPosition = element.getBoundingClientRect().left;
-      }
-
-      return leftPosition;
+      return element ? element.getBoundingClientRect().left : '';
     },
 
     getBlockRightPosition: function (element) {
-      var rightPosition = '';
-
-      if (element) {
-        rightPosition = element.getBoundingClientRect().right;
-      }
-
-      return rightPosition;
+      return element ? element.getBoundingClientRect().right : '';
     },
 
     compareRandom: function () {
