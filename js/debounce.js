@@ -3,17 +3,12 @@
 (function () {
   var DEBOUNCE_INTERVAL_MS = 500;
 
-  window.debounce = function (callback) {
-    var lastTimeout = null;
+  var lastTimeout;
 
-    return function () {
-      var parameters = arguments;
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(function () {
-        callback.apply(null, parameters);
-      }, DEBOUNCE_INTERVAL_MS);
-    };
+  window.debounce = function (callback) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(callback, DEBOUNCE_INTERVAL_MS);
   };
 })();

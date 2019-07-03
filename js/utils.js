@@ -75,6 +75,28 @@
       }
 
       return rightPosition;
+    },
+
+    compareRandom: function () {
+      return Math.random() - 0.5;
+    },
+
+    compareNumbersGoDown: function (left, right) {
+      if (left > right) {
+        return -1;
+      } else if (left < right) {
+        return 1;
+      } else {
+        return 0;
+      }
+    },
+
+    addClassToElement: function (element, className) {
+      element.classList.add(className);
+    },
+
+    removeClassFromElement: function (element, className) {
+      element.classList.remove(className);
     }
   };
 })();
