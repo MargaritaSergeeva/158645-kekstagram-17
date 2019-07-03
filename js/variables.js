@@ -8,6 +8,8 @@
   window.variables = {
     uploadImage: uploadImage,
     imgPreview: imgPreview,
-    effectSlider: effectSlider
+    effectSlider: effectSlider,
+    xhr: new XMLHttpRequest(),
+    photos: []
   };
 })();

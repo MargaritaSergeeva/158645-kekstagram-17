@@ -1,34 +1,24 @@
 'use strict';
 
 (function () {
-  var SUCСESS__STATUS = 200;
-  var MAX_TIMEOUT = 10000;
-
   window.backend = {
     load: function (url, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
+      window.variables.xhr.responseType = 'json';
 
-      xhr.addEventListener('load', function () {
-        if (xhr.status === SUCСESS__STATUS) {
-          onLoad(xhr.response);
+      window.variables.xhr.addEventListener('load', function () {
+        if (window.variables.xhr.status === window.constants.SUCСESS__STATUS) {
+          onLoad(window.variables.xhr.response);
         } else {
-          onError('Статус ответа сервера: ' + xhr.status);
+          onError('Статус ответа сервера: ' + window.variables.xhr.status);
         }
       });
 
-      xhr.addEventListener('error', function () {
+      window.variables.xhr.addEventListener('error', function () {
         onError('Произошла ошибка соединения');
       });
 
-      xhr.addEventListener('timeout', function () {
-        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-      });
-
-      xhr.timeout = MAX_TIMEOUT;
-
-      xhr.open('GET', url);
-      xhr.send();
+      window.variables.xhr.open('GET', url);
+      window.variables.xhr.send();
     }
   };
 })();
