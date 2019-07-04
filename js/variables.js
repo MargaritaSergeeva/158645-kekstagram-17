@@ -9,7 +9,6 @@
     uploadImage: uploadImage,
     imgPreview: imgPreview,
     effectSlider: effectSlider,
-    xhr: new XMLHttpRequest(),
     photos: []
   };
 })();

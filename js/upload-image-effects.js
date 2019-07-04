@@ -78,7 +78,7 @@
   };
 
   var changeBlockFilterStyle = function (evt, element, scaleElement) {
-    var filterStylesMap = {
+    var effectsStylesMap = {
       'chrome': ['grayscale', 0, 1, '', 1],
       'sepia': ['sepia', 0, 1, '', 1],
       'marvin': ['invert', 0, 100, '%', 0.01],
@@ -93,9 +93,9 @@
 
     if (prefix !== 'none') {
       if (proportion !== Proportion.MAX) {
-        element.style.filter = filterStylesMap[prefix][0] + '(' + (proportion / filterStylesMap[prefix][4] + filterStylesMap[prefix][1]).toFixed(2) + filterStylesMap[prefix][3] + ')';
+        element.style.filter = effectsStylesMap[prefix][0] + '(' + (proportion / effectsStylesMap[prefix][4] + effectsStylesMap[prefix][1]).toFixed(2) + effectsStylesMap[prefix][3] + ')';
       } else {
-        element.style.filter = filterStylesMap[prefix][0] + '(' + filterStylesMap[prefix][2] + filterStylesMap[prefix][3] + ')';
+        element.style.filter = effectsStylesMap[prefix][0] + '(' + effectsStylesMap[prefix][2] + effectsStylesMap[prefix][3] + ')';
       }
     } else {
       element.style.filter = 'none';
