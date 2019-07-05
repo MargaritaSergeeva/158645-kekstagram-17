@@ -25,10 +25,7 @@
     var newUsersPhotos = photosArr
     .slice()
     .sort(window.utils.compareRandom)
-    .slice(0, NEW_PHOTOS_COUNT)
-    .map(function (it) {
-      return it;
-    });
+    .slice(0, NEW_PHOTOS_COUNT);
 
     window.debounce(function () {
       window.rendering.addUsersPhotos(newUsersPhotos);
@@ -55,22 +52,22 @@
 
   popularPhotosFilterBtn.addEventListener('click', function () {
     renderPopularPhotos(window.variables.photos);
-    window.utils.addClassToElement(popularPhotosFilterBtn, 'img-filters__button--active');
-    window.utils.removeClassFromElement(newPhotosFilterBtn, 'img-filters__button--active');
-    window.utils.removeClassFromElement(discussedPhotosFilterBtn, 'img-filters__button--active');
+    popularPhotosFilterBtn.classList.add('img-filters__button--active');
+    newPhotosFilterBtn.classList.remove('img-filters__button--active');
+    discussedPhotosFilterBtn.classList.remove('img-filters__button--active');
   });
 
   newPhotosFilterBtn.addEventListener('click', function () {
     renderNewPhotos(window.variables.photos);
-    window.utils.addClassToElement(newPhotosFilterBtn, 'img-filters__button--active');
-    window.utils.removeClassFromElement(popularPhotosFilterBtn, 'img-filters__button--active');
-    window.utils.removeClassFromElement(discussedPhotosFilterBtn, 'img-filters__button--active');
+    newPhotosFilterBtn.classList.add('img-filters__button--active');
+    popularPhotosFilterBtn.classList.remove('img-filters__button--active');
+    discussedPhotosFilterBtn.classList.remove('img-filters__button--active');
   });
 
   discussedPhotosFilterBtn.addEventListener('click', function () {
     renderDiscussedPhotos(window.variables.photos);
-    window.utils.addClassToElement(discussedPhotosFilterBtn, 'img-filters__button--active');
-    window.utils.removeClassFromElement(popularPhotosFilterBtn, 'img-filters__button--active');
-    window.utils.removeClassFromElement(newPhotosFilterBtn, 'img-filters__button--active');
+    discussedPhotosFilterBtn.classList.add('img-filters__button--active');
+    popularPhotosFilterBtn.classList.remove('img-filters__button--active');
+    newPhotosFilterBtn.classList.remove('img-filters__button--active');
   });
 })();

@@ -77,14 +77,6 @@
       if (element) {
         element.className = elementClass;
       }
-    },
-
-    addClassToElement: function (element, className) {
-      element.classList.add(className);
-    },
-
-    removeClassFromElement: function (element, className) {
-      element.classList.remove(className);
     }
   };
 })();
