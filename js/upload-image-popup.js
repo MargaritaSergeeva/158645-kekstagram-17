@@ -6,9 +6,13 @@
   var descriptionImg = window.variables.uploadImage.querySelector('.text__description');
 
   var onPopupEscPress = function (evt) {
-    if (evt.keyCode === window.constants.ESC_KEYCODE) {
+    if (evt.keyCode === window.constants.KeyCode.ESC) {
       window.utils.closeElement(window.variables.uploadImage);
       window.utils.resetInputValue(openUploadImage);
+      window.utils.resetElementStyle(window.variables.imgPreview.querySelector('img'), 'transform');
+      window.utils.resetElementStyle(window.variables.imgPreview, 'filter');
+      window.utils.assignOneClassToElement(window.variables.imgPreview, 'img-upload__preview');
+      window.utils.closeElement(window.variables.effectSlider);
     }
   };
 
@@ -22,7 +26,7 @@
     window.utils.resetInputValue(openUploadImage);
     window.utils.resetElementStyle(window.variables.imgPreview.querySelector('img'), 'transform');
     window.utils.resetElementStyle(window.variables.imgPreview, 'filter');
-    window.utils.assignElementClass(window.variables.imgPreview, 'img-upload__preview');
+    window.utils.assignOneClassToElement(window.variables.imgPreview, 'img-upload__preview');
     window.utils.closeElement(window.variables.effectSlider);
     document.removeEventListener('keydown', onPopupEscPress);
   });

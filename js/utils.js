@@ -22,11 +22,6 @@
       return 0;
     },
 
-    resetBlockPosition: function (element) {
-      element.style.top = '';
-      element.style.left = '';
-    },
-
     getMaxElement: function (arr) {
       var maxElement = arr[0];
 
@@ -37,6 +32,19 @@
       }
 
       return maxElement;
+    },
+
+    getBlockLeftPosition: function (element) {
+      return element ? element.getBoundingClientRect().left : '';
+    },
+
+    getBlockRightPosition: function (element) {
+      return element ? element.getBoundingClientRect().right : '';
+    },
+
+    resetBlockPosition: function (element) {
+      element.style.top = '';
+      element.style.left = '';
     },
 
     resetInputValue: function (input) {
@@ -51,30 +59,24 @@
       }
     },
 
-    assignElementClass: function (element, elementClass) {
+    compareRandom: function () {
+      return Math.random() - 0.5;
+    },
+
+    compareNumbersGoDown: function (left, right) {
+      if (left > right) {
+        return -1;
+      } else if (left < right) {
+        return 1;
+      } else {
+        return 0;
+      }
+    },
+
+    assignOneClassToElement: function (element, elementClass) {
       if (element) {
         element.className = elementClass;
       }
-    },
-
-    getBlockLeftPosition: function (element) {
-      var leftPosition = '';
-
-      if (element) {
-        leftPosition = element.getBoundingClientRect().left;
-      }
-
-      return leftPosition;
-    },
-
-    getBlockRightPosition: function (element) {
-      var rightPosition = '';
-
-      if (element) {
-        rightPosition = element.getBoundingClientRect().right;
-      }
-
-      return rightPosition;
     }
   };
 })();
