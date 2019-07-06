@@ -12,13 +12,6 @@
   var fragment = document.createDocumentFragment();
 
 
-  var UserPhoto = function (url, likes, comments, description) {
-    this.url = url;
-    this.likes = likes;
-    this.comments = comments;
-    this.description = description;
-  };
-
   var removeSocialComments = function () {
     while (socialCommentsList.firstChild) {
       socialCommentsList.removeChild(socialCommentsList.firstChild);
@@ -37,14 +30,12 @@
   };
 
   window.picture = {
-    renderBigUserPhoto: function (photoArr) {
-      var bigUserPhoto = new UserPhoto(photoArr[0].url, photoArr[0].likes, photoArr[0].comments, photoArr[0].description);
+    renderBigUserPhoto: function (photo) {
+      bigPhoto.src = photo.url;
+      likesCount.textContent = photo.likes;
+      bigPhotodescription.textContent = photo.description;
 
-      bigPhoto.src = bigUserPhoto.url;
-      likesCount.textContent = bigUserPhoto.likes;
-      bigPhotodescription.textContent = bigUserPhoto.description;
-
-      bigUserPhoto.comments.forEach(function (it) {
+      photo.comments.forEach(function (it) {
         addSocialComments(it);
       });
 
@@ -53,7 +44,6 @@
     }
   };
 
-  window.utils.showElement(bigPhotoBlock);
   socialCommentsCount.classList.add('visually-hidden');
   socialCommentsLoader.classList.add('visually-hidden');
 })();
