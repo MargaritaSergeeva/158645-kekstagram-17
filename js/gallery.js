@@ -11,5 +11,13 @@
     window.filters.showPhotosFilters();
   };
 
+
   window.backend.load(window.constants.URL_GET, onSuccessLoading, onErrorLoading);
+
+  window.variables.usersPhotosSection.addEventListener('click', function (evt) {
+    window.picture.renderTargetUserPhoto(evt);
+    window.utils.showElement(window.variables.bigPhotoBlock);
+  });
 })();
+
+

@@ -2,8 +2,7 @@
 
 (function () {
   var MAX_PHOTOS_COUNT = 25;
-  var usersPhotosSection = document.querySelector('.pictures');
-  var childrenCount = usersPhotosSection.childNodes.length;
+  var childrenCount = window.variables.usersPhotosSection.childNodes.length;
 
   var createUserPhoto = function (photo) {
     var userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -20,9 +19,9 @@
     return {};
   };
 
-  var removeUsersPhotos = function () {
-    while (usersPhotosSection.childNodes.length !== childrenCount) {
-      usersPhotosSection.removeChild(usersPhotosSection.lastChild);
+  var removeUsersPhotos = function (element) {
+    while (element.childNodes.length !== childrenCount) {
+      element.removeChild(element.lastChild);
     }
   };
 
@@ -37,8 +36,8 @@
           fragment.appendChild(createUserPhoto(it));
         });
 
-        removeUsersPhotos();
-        usersPhotosSection.appendChild(fragment);
+        removeUsersPhotos(window.variables.usersPhotosSection);
+        window.variables.usersPhotosSection.appendChild(fragment);
       }
 
       return {};
