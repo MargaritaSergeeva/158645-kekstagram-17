@@ -14,6 +14,12 @@
       }
     },
 
+    hideElement: function (element) {
+      if (element) {
+        element.classList.add('visually-hidden');
+      }
+    },
+
     getRandomValue: function (arr) {
       if (arr.length > 0) {
         return arr[Math.round(-0.5 + Math.random() * arr.length)];
