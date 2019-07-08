@@ -15,8 +15,9 @@
   window.backend.load(window.constants.URL_GET, onSuccessLoading, onErrorLoading);
 
   window.variables.usersPhotosSection.addEventListener('click', function (evt) {
-    window.picture.renderTargetUserPhoto(evt);
-    window.utils.showElement(window.variables.bigPhotoBlock);
+    if (evt.target.classList.contains('picture__img')) {
+      window.picture.renderTargetUserPhoto(evt);
+    }
   });
 })();
 

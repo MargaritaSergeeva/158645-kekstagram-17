@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var body = document.querySelector('body');
   var uploadImage = document.querySelector('.img-upload__overlay');
   var imgPreview = document.querySelector('.img-upload__preview');
   var effectSlider = document.querySelector('.effect-level');
@@ -8,6 +9,7 @@
   var bigPhotoBlock = document.querySelector('.big-picture');
 
   window.variables = {
+    body: body,
     uploadImage: uploadImage,
     imgPreview: imgPreview,
     effectSlider: effectSlider,
