@@ -1,11 +1,13 @@
 'use strict';
 
 (function () {
-  var MAX_HASHTAG_LENGTH = 20;
-  var MAX_HASHTAG_COUNT = 5;
+  var Hashtag = {
+    MAX_LENGTH: 20,
+    MAX__COUNT: 5
+  };
 
-  var uploadImageForm = window.variables.usersPhotosSection.querySelector('.img-upload__form');
   var hashtagsArr = [];
+
 
   var CustomValidation = function () {};
 
@@ -30,7 +32,7 @@
         this.addInvalidity('Хэш-теги должны разделяться с помощью пробела');
       }
 
-      if (element.length > MAX_HASHTAG_LENGTH) {
+      if (element.length > Hashtag.MAX_LENGTH) {
         isValidity = false;
         this.addInvalidity('Максимальная длина одного хэш-тега должна быть не более 20-ти символов, включая решётку');
       }
@@ -53,7 +55,7 @@
         this.addInvalidity('Хэш-теги не должны повторяться');
       }
 
-      if (arr.length > MAX_HASHTAG_COUNT) {
+      if (arr.length > Hashtag.MAX__COUNT) {
         isValidity = false;
         this.addInvalidity('Не должно быть больше 5-ти хэш-тегов');
       }
@@ -104,33 +106,5 @@
     });
 
     addCustomValidityMessageFromArray(hashtagsArr, window.variables.hashtagsImg);
-  });
-
-  var onSuccess = function (idTemplate) {
-    var successTemplate = document.querySelector(idTemplate).content.querySelector('.success');
-    var successPopup = successTemplate.cloneNode(true);
-    var successButton = successPopup.querySelector('.success__button');
-
-    document.body.appendChild(successPopup);
-
-    successButton.addEventListener('click', function (evt) {
-      evt.preventDefault();
-      document.body.removeChild(successPopup);
-    });
-  };
-
-  var onSuccessPostForm = function () {
-    window.utils.closeElement(window.variables.uploadImage);
-    onSuccess('#success');
-  };
-
-  var onErrorPostForm = function () {
-    window.errors.onError('#error');
-  };
-
-
-  uploadImageForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    window.backend.save(window.constants.Url.POST, new FormData(uploadImageForm), onSuccessPostForm, onErrorPostForm);
   });
 })();

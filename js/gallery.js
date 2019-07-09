@@ -2,7 +2,7 @@
 
 (function () {
   var onErrorLoading = function (errorMessage) {
-    window.errors.onError('#error__start-page', errorMessage);
+    window.messages.showErrorMessage('#error__start-page', errorMessage);
   };
 
   var onSuccessLoading = function (photosArr) {
