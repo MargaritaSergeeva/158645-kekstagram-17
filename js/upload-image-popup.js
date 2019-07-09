@@ -38,4 +38,12 @@
   descriptionImg.addEventListener('blur', function () {
     document.addEventListener('keydown', onUploadImgPopupEscPress);
   });
+
+  window.variables.hashtagsImg.addEventListener('focus', function () {
+    document.removeEventListener('keydown', onUploadImgPopupEscPress);
+  });
+
+  window.variables.hashtagsImg.addEventListener('blur', function () {
+    document.addEventListener('keydown', onUploadImgPopupEscPress);
+  });
 })();

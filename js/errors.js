@@ -2,8 +2,8 @@
 
 (function () {
   window.errors = {
-    onErrorStartPage: function (errorMessage) {
-      var errorStartPageTemplate = document.querySelector('#error__start-page').content.querySelector('.error');
+    onError: function (idTemplate, errorMessage) {
+      var errorStartPageTemplate = document.querySelector(idTemplate).content.querySelector('.error');
       var errorStartPagePopup = errorStartPageTemplate.cloneNode(true);
       var errorText = errorStartPagePopup.querySelector('.error__title');
       var errorButton = errorStartPagePopup.querySelector('.error__button');

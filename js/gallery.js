@@ -2,7 +2,7 @@
 
 (function () {
   var onErrorLoading = function (errorMessage) {
-    window.errors.onErrorStartPage(errorMessage);
+    window.errors.onError('#error__start-page', errorMessage);
   };
 
   var onSuccessLoading = function (photosArr) {
@@ -12,7 +12,7 @@
   };
 
 
-  window.backend.load(window.constants.URL_GET, onSuccessLoading, onErrorLoading);
+  window.backend.load(window.constants.Url.GET, onSuccessLoading, onErrorLoading);
 
   window.variables.usersPhotosSection.addEventListener('click', function (evt) {
     if (evt.target.classList.contains('picture__img')) {
