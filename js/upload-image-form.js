@@ -17,6 +17,7 @@
 
   uploadImageForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    window.inputValidity.checkHashTagInputValidity(window.variables.hashtagsImg);
     window.messages.showLoadingMessage();
     window.backend.save(window.constants.Url.POST, new FormData(uploadImageForm), onSuccessSending, onErrorSending);
   });

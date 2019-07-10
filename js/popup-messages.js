@@ -25,9 +25,12 @@
         }
       };
 
-
       checkMainChildNodes();
-      errorText.textContent = errorMessage;
+
+      if (errorMessage) {
+        errorText.textContent = errorMessage;
+      }
+
       window.variables.main.appendChild(errorPopup);
       document.addEventListener('keydown', onEscPressError);
 
