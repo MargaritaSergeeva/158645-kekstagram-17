@@ -19,10 +19,10 @@
       if (inputCustomValidation.checkValidityArray(hashtagsArr) === false) {
         var customValidityMessage = inputCustomValidation.getInvalidities();
         input.setCustomValidity(customValidityMessage);
-        input.style.backgroundColor = '#f48346';
+        input.style.borderColor = '#f48346';
       } else {
         input.setCustomValidity('');
-        input.style.backgroundColor = '#ffffff';
+        input.style.borderColor = '#ffffff';
       }
     }
   };
