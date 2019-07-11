@@ -14,10 +14,9 @@
 
 
   var hideSlider = function (evt) {
-    var originImgInput = window.variables.uploadImage.querySelector('#effect-none');
     var effectSlider = window.variables.uploadImage.querySelector('.effect-level');
 
-    if (evt.target === originImgInput) {
+    if (evt.target === window.variables.originImgInput) {
       window.utils.closeElement(effectSlider);
     } else {
       window.utils.showElement(effectSlider);
