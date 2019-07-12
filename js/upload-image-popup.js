@@ -32,7 +32,7 @@
   };
 
   window.variables.openUploadImage.addEventListener('change', function () {
-    window.utils.showElement(window.variables.uploadImage);
+    window.loading.userImage();
     document.addEventListener('keydown', onUploadImgPopupEscPress);
   });
 
