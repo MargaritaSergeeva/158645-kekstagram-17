@@ -19,7 +19,7 @@
       var errorText = errorModal.querySelector('.error__title');
 
       var onErrorEscPress = function (evt) {
-        if (evt.keyCode === window.constants.KeyCode.ESC) {
+        if (window.keyboard.isEscPressed(evt)) {
           window.variables.main.removeChild(errorModal);
           document.removeEventListener('keydown', onErrorEscPress);
         }
@@ -53,7 +53,7 @@
       var successModal = successTemplate.cloneNode(true);
 
       var onSuccessEscPress = function (evt) {
-        if (evt.keyCode === window.constants.KeyCode.ESC) {
+        if (window.keyboard.isEscPressed(evt)) {
           window.variables.main.removeChild(successModal);
           document.removeEventListener('keydown', onSuccessEscPress);
         }

@@ -18,7 +18,7 @@
   };
 
   var onUploadImageModalEscPress = function (evt) {
-    if (evt.keyCode === window.constants.KeyCode.ESC) {
+    if (window.keyboard.isEscPressed(evt)) {
       resetChangesUploadImageModal();
       window.utils.closeElement(window.variables.uploadImageModal);
     }

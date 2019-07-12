@@ -22,7 +22,7 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.constants.KeyCode.ENTER) {
+    if (window.keyboard.isEnterPressed(evt)) {
       if (evt.target.classList.contains('picture')) {
         var photoAddress = evt.target.querySelector('.picture__img').src;
         window.picture.renderTargetUserPhoto(photoAddress);

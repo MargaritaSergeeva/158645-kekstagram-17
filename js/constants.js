@@ -2,10 +2,6 @@
 
 (function () {
   window.constants = {
-    KeyCode: {
-      ESC: 27,
-      ENTER: 13
-    },
     Url: {
       GET: 'https://js.dump.academy/kekstagram/data',
       POST: 'https://js.dump.academy/kekstagram'

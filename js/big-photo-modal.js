@@ -18,7 +18,7 @@
   var openedBigPhoto;
 
   var onBigImageModalEscPress = function (evt) {
-    if (evt.keyCode === window.constants.KeyCode.ESC) {
+    if (window.keyboard.isEscPressed(evt)) {
       window.utils.closeElement(window.variables.bigPhotoModal);
       document.body.classList.remove('modal-open');
       resetShowedComments();
