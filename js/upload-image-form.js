@@ -4,12 +4,12 @@
   var uploadImageForm = window.variables.usersPhotosSection.querySelector('.img-upload__form');
 
 
-  var onSuccessSending = function () {
+  var onSuccessSendForm = function () {
     window.messages.showSuccessMessage('#success');
     window.uploadImagePopup.closeUploadImagePopup();
   };
 
-  var onErrorSending = function () {
+  var onErrorSendForm = function () {
     window.messages.showErrorMessage('#error');
     window.uploadImagePopup.closeUploadImagePopup();
   };
@@ -19,6 +19,6 @@
     evt.preventDefault();
     window.inputValidity.checkHashTagInputValidity(window.variables.hashtagsImg);
     window.messages.showLoadingMessage();
-    window.backend.save(window.constants.Url.POST, new FormData(uploadImageForm), onSuccessSending, onErrorSending);
+    window.backend.save(window.constants.Url.POST, new FormData(uploadImageForm), onSuccessSendForm, onErrorSendForm);
   });
 })();

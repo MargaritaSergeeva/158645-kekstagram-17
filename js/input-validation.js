@@ -13,7 +13,6 @@
       });
 
       var inputCustomValidation = new window.CustomValidation();
-      inputCustomValidation.invalidities = [];
       inputCustomValidation.checkValidityArray(hashtagsArr);
 
       if (inputCustomValidation.checkValidityArray(hashtagsArr) === false) {

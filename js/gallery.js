@@ -1,18 +1,18 @@
 'use strict';
 
 (function () {
-  var onErrorLoading = function (errorMessage) {
+  var onErrorLoadData = function (errorMessage) {
     window.messages.showErrorMessage('#error__start-page', errorMessage);
   };
 
-  var onSuccessLoading = function (photosArr) {
+  var onSuccessLoadData = function (photosArr) {
     window.variables.photos = photosArr;
     window.rendering.addUsersPhotos(window.variables.photos);
     window.filters.showPhotosFilters();
   };
 
 
-  window.backend.load(window.constants.Url.GET, onSuccessLoading, onErrorLoading);
+  window.backend.load(window.constants.Url.GET, onSuccessLoadData, onErrorLoadData);
 
   window.variables.usersPhotosSection.addEventListener('click', function (evt) {
     if (evt.target.classList.contains('picture__img')) {
