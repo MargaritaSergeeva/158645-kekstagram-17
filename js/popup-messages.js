@@ -13,7 +13,7 @@
   };
 
   window.messages = {
-    showErrorMessage: function (idTemplate, errorMessage) {
+    showError: function (idTemplate, errorMessage) {
       var errorTemplate = document.querySelector(idTemplate).content.querySelector('.error');
       var errorModal = errorTemplate.cloneNode(true);
       var errorText = errorModal.querySelector('.error__title');
@@ -48,7 +48,7 @@
       });
     },
 
-    showSuccessMessage: function (idTemplate) {
+    showSuccess: function (idTemplate) {
       var successTemplate = document.querySelector(idTemplate).content.querySelector('.success');
       var successModal = successTemplate.cloneNode(true);
 
@@ -78,7 +78,7 @@
       });
     },
 
-    showLoadingMessage: function () {
+    showLoading: function () {
       var loadingTemplate = document.querySelector('#messages').content.querySelector('.img-upload__message--loading');
       var loadingModal = loadingTemplate.cloneNode(true);
 

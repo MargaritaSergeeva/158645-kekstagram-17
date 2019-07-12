@@ -10,7 +10,7 @@
 
 
   window.filters = {
-    showPhotosFilters: function () {
+    show: function () {
       photosFilters.classList.remove('img-filters--inactive');
     }
   };

@@ -2,13 +2,13 @@
 
 (function () {
   var onErrorLoadData = function (errorMessage) {
-    window.messages.showErrorMessage('#error__start-page', errorMessage);
+    window.messages.showError('#error__start-page', errorMessage);
   };
 
   var onSuccessLoadData = function (photosArr) {
     window.variables.photos = photosArr;
     window.rendering.addUsersPhotos(window.variables.photos);
-    window.filters.showPhotosFilters();
+    window.filters.show();
   };
 
 
