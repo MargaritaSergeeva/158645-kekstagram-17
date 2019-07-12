@@ -26,11 +26,11 @@
   };
 
   window.rendering = {
-    addUsersPhotos: function (photosArr) {
+    addUsersPhotos: function (photos) {
       var fragment = document.createDocumentFragment();
 
-      if (photosArr.length > 0) {
-        photosArr
+      if (photos.length > 0) {
+        photos
         .slice(0, MAX_PHOTOS_COUNT)
         .forEach(function (it) {
           fragment.appendChild(createUserPhoto(it));

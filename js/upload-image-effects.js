@@ -6,20 +6,18 @@
     MAX: 1
   };
 
-  var effectsListImg = window.variables.uploadImage.querySelector('.effects__list');
-  var effectSliderLine = window.variables.uploadImage.querySelector('.effect-level__line');
-  var effectsSliderPin = window.variables.uploadImage.querySelector('.effect-level__pin');
-  var effectsSliderDepthScale = window.variables.uploadImage.querySelector('.effect-level__depth');
-  var effectsLavelValue = window.variables.uploadImage.querySelector('.effect-level__value');
+  var effectsListImage = window.variables.uploadImageModal.querySelector('.effects__list');
+  var effectsSliderLine = window.variables.uploadImageModal.querySelector('.effect-level__line');
+  var effectsSliderPin = window.variables.uploadImageModal.querySelector('.effect-level__pin');
+  var effectsSliderDepthScale = window.variables.uploadImageModal.querySelector('.effect-level__depth');
+  var effectsLavelValue = window.variables.uploadImageModal.querySelector('.effect-level__value');
 
 
   var hideSlider = function (evt) {
-    var effectSlider = window.variables.uploadImage.querySelector('.effect-level');
-
-    if (evt.target === window.variables.originImgInput) {
-      window.utils.closeElement(effectSlider);
+    if (evt.target === window.variables.originImageInput) {
+      window.utils.closeElement(window.variables.effectsSlider);
     } else {
-      window.utils.showElement(effectSlider);
+      window.utils.showElement(window.variables.effectsSlider);
     }
   };
 
@@ -29,7 +27,7 @@
     return prefixArr[1];
   };
 
-  var addImgClass = function (evt, element) {
+  var addImageClass = function (evt, element) {
     var prefix = getClassPrefix(evt);
 
     if (element) {
@@ -61,7 +59,7 @@
   };
 
   var changeSaturationValue = function (evt) {
-    effectsLavelValue.value = getProportion(evt, effectSliderLine) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
+    effectsLavelValue.value = getProportion(evt, effectsSliderLine) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
   };
 
   var resetSaturationValue = function () {
@@ -146,19 +144,19 @@
 
   effectsSliderPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    mouseMoveBlockX(effectsSliderPin, effectSliderLine, window.variables.imgPreview, effectsSliderDepthScale);
+    mouseMoveBlockX(effectsSliderPin, effectsSliderLine, window.variables.imagePreview, effectsSliderDepthScale);
   });
 
-  effectSliderLine.addEventListener('click', function (evt) {
+  effectsSliderLine.addEventListener('click', function (evt) {
     evt.preventDefault();
-    changePositionBlockX(evt, effectsSliderPin, effectSliderLine);
-    changeSliderDepthScale(evt, effectsSliderDepthScale, effectSliderLine);
-    changeBlockFilterStyle(evt, window.variables.imgPreview, effectSliderLine);
+    changePositionBlockX(evt, effectsSliderPin, effectsSliderLine);
+    changeSliderDepthScale(evt, effectsSliderDepthScale, effectsSliderLine);
+    changeBlockFilterStyle(evt, window.variables.imagePreview, effectsSliderLine);
     changeSaturationValue(evt);
   });
 
-  effectsListImg.addEventListener('click', function (evt) {
-    addImgClass(evt, window.variables.imgPreview);
+  effectsListImage.addEventListener('click', function (evt) {
+    addImageClass(evt, window.variables.imagePreview);
     hideSlider(evt);
     resetSaturationValue();
     window.utils.resetBlockPosition(effectsSliderPin);

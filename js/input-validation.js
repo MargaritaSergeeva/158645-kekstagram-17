@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  window.inputValidity = {
-    checkHashTagInputValidity: function (input) {
-      var hashtagsArr = window.variables.hashtagsImg.value
+  window.validity = {
+    checkHashTagInput: function (input) {
+      var hashtags = window.variables.imageHashtags.value
       .split(' ')
       .map(function (it) {
         return it.toLowerCase();
@@ -13,9 +13,9 @@
       });
 
       var inputCustomValidation = new window.CustomValidation();
-      inputCustomValidation.checkValidityArray(hashtagsArr);
+      inputCustomValidation.checkValidityArray(hashtags);
 
-      if (inputCustomValidation.checkValidityArray(hashtagsArr) === false) {
+      if (inputCustomValidation.checkValidityArray(hashtags) === false) {
         var customValidityMessage = inputCustomValidation.getInvalidities();
         input.setCustomValidity(customValidityMessage);
         input.style.borderColor = '#f48346';
@@ -26,8 +26,8 @@
     }
   };
 
-  window.variables.hashtagsImg.addEventListener('change', function (evt) {
+  window.variables.imageHashtags.addEventListener('change', function (evt) {
     evt.preventDefault();
-    window.inputValidity.checkHashTagInputValidity(window.variables.hashtagsImg);
+    window.validity.checkHashTagInput(window.variables.imageHashtags);
   });
 })();

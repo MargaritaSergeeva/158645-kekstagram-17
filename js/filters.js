@@ -4,9 +4,9 @@
   var NEW_PHOTOS_COUNT = 10;
 
   var photosFilters = document.querySelector('.img-filters');
-  var popularPhotosFilterBtn = photosFilters.querySelector('#filter-popular');
-  var newPhotosFilterBtn = photosFilters.querySelector('#filter-new');
-  var discussedPhotosFilterBtn = photosFilters.querySelector('#filter-discussed');
+  var popularPhotosFilterButton = photosFilters.querySelector('#filter-popular');
+  var newPhotosFilterButton = photosFilters.querySelector('#filter-new');
+  var discussedPhotosFilterButton = photosFilters.querySelector('#filter-discussed');
 
 
   window.filters = {
@@ -50,24 +50,24 @@
     });
   };
 
-  popularPhotosFilterBtn.addEventListener('click', function () {
+  popularPhotosFilterButton.addEventListener('click', function () {
     renderPopularPhotos(window.variables.photos);
-    popularPhotosFilterBtn.classList.add('img-filters__button--active');
-    newPhotosFilterBtn.classList.remove('img-filters__button--active');
-    discussedPhotosFilterBtn.classList.remove('img-filters__button--active');
+    popularPhotosFilterButton.classList.add('img-filters__button--active');
+    newPhotosFilterButton.classList.remove('img-filters__button--active');
+    discussedPhotosFilterButton.classList.remove('img-filters__button--active');
   });
 
-  newPhotosFilterBtn.addEventListener('click', function () {
+  newPhotosFilterButton.addEventListener('click', function () {
     renderNewPhotos(window.variables.photos);
-    newPhotosFilterBtn.classList.add('img-filters__button--active');
-    popularPhotosFilterBtn.classList.remove('img-filters__button--active');
-    discussedPhotosFilterBtn.classList.remove('img-filters__button--active');
+    newPhotosFilterButton.classList.add('img-filters__button--active');
+    popularPhotosFilterButton.classList.remove('img-filters__button--active');
+    discussedPhotosFilterButton.classList.remove('img-filters__button--active');
   });
 
-  discussedPhotosFilterBtn.addEventListener('click', function () {
+  discussedPhotosFilterButton.addEventListener('click', function () {
     renderDiscussedPhotos(window.variables.photos);
-    discussedPhotosFilterBtn.classList.add('img-filters__button--active');
-    popularPhotosFilterBtn.classList.remove('img-filters__button--active');
-    newPhotosFilterBtn.classList.remove('img-filters__button--active');
+    discussedPhotosFilterButton.classList.add('img-filters__button--active');
+    popularPhotosFilterButton.classList.remove('img-filters__button--active');
+    newPhotosFilterButton.classList.remove('img-filters__button--active');
   });
 })();

@@ -1,58 +1,57 @@
 'use strict';
 
 (function () {
-  var closeUploadImage = window.variables.uploadImage.querySelector('#upload-cancel');
-  var descriptionImg = window.variables.uploadImage.querySelector('.text__description');
+  var closureUploadImage = window.variables.uploadImageModal.querySelector('#upload-cancel');
 
 
-  var resetChangesUploadImagePopup = function () {
-    window.utils.closeElement(window.variables.uploadImage);
-    window.utils.resetInputValue(window.variables.openUploadImage);
-    window.utils.resetInputValue(window.variables.hashtagsImg);
-    window.utils.resetElementStyle(window.variables.imgPreview.querySelector('img'), 'transform');
-    window.utils.resetElementStyle(window.variables.imgPreview, 'filter');
-    window.utils.assignOneClassToElement(window.variables.imgPreview, 'img-upload__preview');
-    window.utils.closeElement(window.variables.effectSlider);
-    window.variables.originImgInput.checked = true;
-    window.utils.resetElementStyle(window.variables.hashtagsImg, 'borderColor');
+  var resetChangesUploadImageModal = function () {
+    window.utils.closeElement(window.variables.uploadImageModal);
+    window.utils.resetInputValue(window.variables.openerUploadImage);
+    window.utils.resetInputValue(window.variables.imageHashtags);
+    window.utils.resetInputValue(window.variables.imageDescription);
+    window.utils.resetElementStyle(window.variables.imagePreview.querySelector('img'), 'transform');
+    window.utils.resetElementStyle(window.variables.imagePreview, 'filter');
+    window.utils.assignOneClassToElement(window.variables.imagePreview, 'img-upload__preview');
+    window.utils.closeElement(window.variables.effectsSlider);
+    window.variables.originImageInput.checked = true;
+    window.utils.resetElementStyle(window.variables.imageHashtags, 'borderColor');
+    document.removeEventListener('keydown', onUploadImageModalEscPress);
   };
 
-  var onUploadImgPopupEscPress = function (evt) {
+  var onUploadImageModalEscPress = function (evt) {
     if (evt.keyCode === window.constants.KeyCode.ESC) {
-      resetChangesUploadImagePopup();
-      document.removeEventListener('keydown', onUploadImgPopupEscPress);
+      resetChangesUploadImageModal();
     }
   };
 
-  window.uploadImagePopup = {
-    closeUploadImagePopup: function () {
-      resetChangesUploadImagePopup();
-      document.removeEventListener('keydown', onUploadImgPopupEscPress);
+  window.uploadImageModal = {
+    close: function () {
+      resetChangesUploadImageModal();
     }
   };
 
-  window.variables.openUploadImage.addEventListener('change', function () {
+  window.variables.openerUploadImage.addEventListener('change', function () {
     window.loading.userImage();
-    document.addEventListener('keydown', onUploadImgPopupEscPress);
+    document.addEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  closeUploadImage.addEventListener('click', function () {
-    window.uploadImagePopup.closeUploadImagePopup();
+  closureUploadImage.addEventListener('click', function () {
+    window.uploadImageModal.close();
   });
 
-  descriptionImg.addEventListener('focus', function () {
-    document.removeEventListener('keydown', onUploadImgPopupEscPress);
+  window.variables.imageDescription.addEventListener('focus', function () {
+    document.removeEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  descriptionImg.addEventListener('blur', function () {
-    document.addEventListener('keydown', onUploadImgPopupEscPress);
+  window.variables.imageDescription.addEventListener('blur', function () {
+    document.addEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  window.variables.hashtagsImg.addEventListener('focus', function () {
-    document.removeEventListener('keydown', onUploadImgPopupEscPress);
+  window.variables.imageHashtags.addEventListener('focus', function () {
+    document.removeEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  window.variables.hashtagsImg.addEventListener('blur', function () {
-    document.addEventListener('keydown', onUploadImgPopupEscPress);
+  window.variables.imageHashtags.addEventListener('blur', function () {
+    document.addEventListener('keydown', onUploadImageModalEscPress);
   });
 })();

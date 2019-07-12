@@ -6,18 +6,18 @@
 
   var onSuccessSendForm = function () {
     window.messages.showSuccessMessage('#success');
-    window.uploadImagePopup.closeUploadImagePopup();
+    window.uploadImageModal.close();
   };
 
   var onErrorSendForm = function () {
     window.messages.showErrorMessage('#error');
-    window.uploadImagePopup.closeUploadImagePopup();
+    window.uploadImageModal.close();
   };
 
 
   uploadImageForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.inputValidity.checkHashTagInputValidity(window.variables.hashtagsImg);
+    window.validity.checkHashTagInput(window.variables.imageHashtags);
     window.messages.showLoadingMessage();
     window.backend.save(window.constants.Url.POST, new FormData(uploadImageForm), onSuccessSendForm, onErrorSendForm);
   });

@@ -6,9 +6,9 @@
     STEP: 25
   };
 
-  var zoomOutImg = window.variables.uploadImage.querySelector('.scale__control--smaller');
-  var zoomInImg = window.variables.uploadImage.querySelector('.scale__control--bigger');
-  var zoomValueImg = window.variables.uploadImage.querySelector('.scale__control--value');
+  var imageZoomOut = window.variables.uploadImageModal.querySelector('.scale__control--smaller');
+  var imageZoomIn = window.variables.uploadImageModal.querySelector('.scale__control--bigger');
+  var imageZoomValue = window.variables.uploadImageModal.querySelector('.scale__control--value');
 
 
   var getNamberFromInputValue = function (element) {
@@ -44,13 +44,13 @@
     }
   };
 
-  zoomInImg.addEventListener('click', function () {
-    changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, true);
-    changeImgScale(window.variables.imgPreview, getNamberFromInputValue(zoomValueImg));
+  imageZoomIn.addEventListener('click', function () {
+    changeInputValueWithPercent(imageZoomValue, getNamberFromInputValue(imageZoomValue), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, true);
+    changeImgScale(window.variables.imagePreview, getNamberFromInputValue(imageZoomValue));
   });
 
-  zoomOutImg.addEventListener('click', function () {
-    changeInputValueWithPercent(zoomValueImg, getNamberFromInputValue(zoomValueImg), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, false);
-    changeImgScale(window.variables.imgPreview, getNamberFromInputValue(zoomValueImg));
+  imageZoomOut.addEventListener('click', function () {
+    changeInputValueWithPercent(imageZoomValue, getNamberFromInputValue(imageZoomValue), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, false);
+    changeImgScale(window.variables.imagePreview, getNamberFromInputValue(imageZoomValue));
   });
 })();
