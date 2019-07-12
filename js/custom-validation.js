@@ -38,7 +38,7 @@
     },
 
     checkValidityArray: function (arr) {
-      var sameElements = arr.filter(function (it, index) {
+      var sameElements = arr.some(function (it, index) {
         return arr.indexOf(it) !== index;
       });
 
@@ -47,7 +47,7 @@
         var isValidity = this.checkValidity(arr[i]);
       }
 
-      if (sameElements[0]) {
+      if (sameElements) {
         isValidity = false;
         this.addInvalidity('Хэш-теги не должны повторяться');
       }

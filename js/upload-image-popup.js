@@ -5,7 +5,6 @@
 
 
   var resetChangesUploadImageModal = function () {
-    window.utils.closeElement(window.variables.uploadImageModal);
     window.utils.resetInputValue(window.variables.openerUploadImage);
     window.utils.resetInputValue(window.variables.imageHashtags);
     window.utils.resetInputValue(window.variables.imageDescription);
@@ -21,12 +20,14 @@
   var onUploadImageModalEscPress = function (evt) {
     if (evt.keyCode === window.constants.KeyCode.ESC) {
       resetChangesUploadImageModal();
+      window.utils.closeElement(window.variables.uploadImageModal);
     }
   };
 
   window.uploadImageModal = {
     close: function () {
       resetChangesUploadImageModal();
+      window.utils.closeElement(window.variables.uploadImageModal);
     }
   };
 
