@@ -25,22 +25,20 @@
     }
   };
 
-  window.rendering = {
-    addUsersPhotos: function (photos) {
-      var fragment = document.createDocumentFragment();
+  window.addUsersPhotos = function (photos) {
+    var fragment = document.createDocumentFragment();
 
-      if (photos.length > 0) {
-        photos
-        .slice(0, MAX_PHOTOS_COUNT)
-        .forEach(function (it) {
-          fragment.appendChild(createUserPhoto(it));
-        });
+    if (photos.length > 0) {
+      photos
+      .slice(0, MAX_PHOTOS_COUNT)
+      .forEach(function (it) {
+        fragment.appendChild(createUserPhoto(it));
+      });
 
-        removeUsersPhotos(window.variables.usersPhotosSection);
-        window.variables.usersPhotosSection.appendChild(fragment);
-      }
-
-      return {};
+      removeUsersPhotos(window.variables.usersPhotosSection);
+      window.variables.usersPhotosSection.appendChild(fragment);
     }
+
+    return {};
   };
 })();

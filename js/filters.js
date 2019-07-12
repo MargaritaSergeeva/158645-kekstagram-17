@@ -9,15 +9,13 @@
   var discussedPhotosFilterButton = photosFilters.querySelector('#filter-discussed');
 
 
-  window.filters = {
-    show: function () {
-      photosFilters.classList.remove('img-filters--inactive');
-    }
+  window.showUsersPhotosFilters = function () {
+    photosFilters.classList.remove('img-filters--inactive');
   };
 
   var renderPopularPhotos = function (photosArr) {
     window.debounce(function () {
-      window.rendering.addUsersPhotos(photosArr);
+      window.addUsersPhotos(photosArr);
     });
   };
 
@@ -28,7 +26,7 @@
     .slice(0, NEW_PHOTOS_COUNT);
 
     window.debounce(function () {
-      window.rendering.addUsersPhotos(newUsersPhotos);
+      window.addUsersPhotos(newUsersPhotos);
     });
   };
 
@@ -46,7 +44,7 @@
     });
 
     window.debounce(function () {
-      window.rendering.addUsersPhotos(discussedUsersPhotos);
+      window.addUsersPhotos(discussedUsersPhotos);
     });
   };
 

@@ -12,7 +12,7 @@
     }
   };
 
-  window.messages = {
+  window.popupMessages = {
     showError: function (idTemplate, errorMessage) {
       var errorTemplate = document.querySelector(idTemplate).content.querySelector('.error');
       var errorModal = errorTemplate.cloneNode(true);

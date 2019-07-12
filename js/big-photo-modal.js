@@ -87,17 +87,15 @@
     commentsList.appendChild(fragment);
   };
 
-  window.picture = {
-    renderTargetUserPhoto: function (url) {
-      var targetPhotos = window.variables.photos.filter(function (it) {
-        return url.endsWith(it.url);
-      });
+  window.renderTargetUserPhoto = function (url) {
+    var targetPhotos = window.variables.photos.filter(function (it) {
+      return url.endsWith(it.url);
+    });
 
-      renderBigUserPhoto(targetPhotos[0]);
-      document.body.classList.add('modal-open');
-      window.utils.showElement(window.variables.bigPhotoModal);
-      document.addEventListener('keydown', onBigImageModalEscPress);
-    }
+    renderBigUserPhoto(targetPhotos[0]);
+    document.body.classList.add('modal-open');
+    window.utils.showElement(window.variables.bigPhotoModal);
+    document.addEventListener('keydown', onBigImageModalEscPress);
   };
 
 

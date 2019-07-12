@@ -5,20 +5,20 @@
 
 
   var onSuccessSendForm = function () {
-    window.messages.showSuccess('#success');
-    window.uploadImageModal.close();
+    window.popupMessages.showSuccess('#success');
+    window.closeUploadImageModal();
   };
 
   var onErrorSendForm = function () {
-    window.messages.showError('#error');
-    window.uploadImageModal.close();
+    window.popupMessages.showError('#error');
+    window.closeUploadImageModal();
   };
 
 
   uploadImageForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.validity.checkHashTagInput(window.variables.imageHashtags);
-    window.messages.showLoading();
+    window.checkHashTagInputValidity(window.variables.imageHashtags);
+    window.popupMessages.showLoading();
     window.backend.save(window.constants.Url.POST, new FormData(uploadImageForm), onSuccessSendForm, onErrorSendForm);
   });
 })();

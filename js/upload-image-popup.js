@@ -24,20 +24,18 @@
     }
   };
 
-  window.uploadImageModal = {
-    close: function () {
-      resetChangesUploadImageModal();
-      window.utils.closeElement(window.variables.uploadImageModal);
-    }
+  window.closeUploadImageModal = function () {
+    resetChangesUploadImageModal();
+    window.utils.closeElement(window.variables.uploadImageModal);
   };
 
   window.variables.openerUploadImage.addEventListener('change', function () {
-    window.loading.userImage();
+    window.loadUserImage();
     document.addEventListener('keydown', onUploadImageModalEscPress);
   });
 
   closureUploadImage.addEventListener('click', function () {
-    window.uploadImageModal.close();
+    window.closeUploadImageModal();
   });
 
   window.variables.imageDescription.addEventListener('focus', function () {
