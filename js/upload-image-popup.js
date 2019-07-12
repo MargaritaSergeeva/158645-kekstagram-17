@@ -14,6 +14,7 @@
     window.utils.assignOneClassToElement(window.variables.imgPreview, 'img-upload__preview');
     window.utils.closeElement(window.variables.effectSlider);
     window.variables.originImgInput.checked = true;
+    window.utils.resetElementStyle(window.variables.hashtagsImg, 'borderColor');
   };
 
   var onUploadImgPopupEscPress = function (evt) {

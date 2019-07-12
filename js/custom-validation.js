@@ -19,7 +19,7 @@
         this.addInvalidity('Хэш-тег должен начинаться с символа # (решётка)');
       }
 
-      if (element.substring(1) === '') {
+      if (element[0] === '#' && element.substring(1) === '') {
         isValidity = false;
         this.addInvalidity('Хэш-тег не должен состоять из одной решётки');
       }
