@@ -1,29 +1,19 @@
 'use strict';
 
 (function () {
-  var main = document.querySelector('main');
-  var openerUploadImage = document.querySelector('#upload-file');
   var uploadImageModal = document.querySelector('.img-upload__overlay');
-  var imagePreview = uploadImageModal.querySelector('.img-upload__preview');
-  var effectsSlider = uploadImageModal.querySelector('.effect-level');
-  var originImageInput = uploadImageModal.querySelector('#effect-none');
-  var imageHashtags = uploadImageModal.querySelector('.text__hashtags');
-  var imageDescription = uploadImageModal.querySelector('.text__description');
-  var usersPhotosSection = document.querySelector('.pictures');
-  var bigPhotoModal = document.querySelector('.big-picture');
-
 
   window.variables = {
-    main: main,
-    openerUploadImage: openerUploadImage,
+    main: document.querySelector('main'),
+    openerUploadImage: document.querySelector('#upload-file'),
     uploadImageModal: uploadImageModal,
-    imagePreview: imagePreview,
-    effectsSlider: effectsSlider,
-    originImageInput: originImageInput,
-    imageHashtags: imageHashtags,
-    imageDescription: imageDescription,
-    usersPhotosSection: usersPhotosSection,
-    bigPhotoModal: bigPhotoModal,
+    imagePreview: uploadImageModal.querySelector('.img-upload__preview'),
+    effectsSlider: uploadImageModal.querySelector('.effect-level'),
+    originImageInput: uploadImageModal.querySelector('#effect-none'),
+    imageHashtags: uploadImageModal.querySelector('.text__hashtags'),
+    imageDescription: uploadImageModal.querySelector('.text__description'),
+    usersPhotosSection: document.querySelector('.pictures'),
+    bigPhotoModal: document.querySelector('.big-picture'),
     photos: []
   };
 })();

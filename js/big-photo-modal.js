@@ -27,12 +27,6 @@
     }
   };
 
-  var removeComments = function () {
-    while (commentsList.firstChild) {
-      commentsList.removeChild(commentsList.firstChild);
-    }
-  };
-
   var addComments = function (it) {
     var comment = commentTemplate.cloneNode(true);
     var commentText = comment.querySelector('.social__text');
@@ -65,7 +59,7 @@
   };
 
   var renderBigUserPhoto = function (photo) {
-    openedBigPhoto = new window.BigUserPhoto(photo);
+    openedBigPhoto = new window.BigPhoto(photo);
 
     bigPhotoImage.src = openedBigPhoto.url;
     likesCount.textContent = openedBigPhoto.likes;
@@ -83,7 +77,7 @@
       window.utils.showElement(commentsLoader);
     }
 
-    removeComments();
+    commentsList.innerHTML = '';
     commentsList.appendChild(fragment);
   };
 

@@ -12,15 +12,16 @@
     });
 
     var inputCustomValidation = new window.CustomValidation();
+    inputCustomValidation.invalidities = [];
     inputCustomValidation.checkValidityArray(hashtags);
 
-    if (inputCustomValidation.checkValidityArray(hashtags) === false) {
+    if (inputCustomValidation.checkValidityArray(hashtags)) {
+      input.setCustomValidity('');
+      input.style.borderColor = '#ffffff';
+    } else {
       var customValidityMessage = inputCustomValidation.getInvalidities();
       input.setCustomValidity(customValidityMessage);
       input.style.borderColor = '#f48346';
-    } else {
-      input.setCustomValidity('');
-      input.style.borderColor = '#ffffff';
     }
   };
 

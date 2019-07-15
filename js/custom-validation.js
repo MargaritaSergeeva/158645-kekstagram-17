@@ -19,12 +19,12 @@
         this.addInvalidity('Хэш-тег должен начинаться с символа # (решётка)');
       }
 
-      if (element[0] === '#' && element.substring(1) === '') {
+      if (element[0] === '#' && element.length < 2) {
         isValidity = false;
         this.addInvalidity('Хэш-тег не должен состоять из одной решётки');
       }
 
-      if (element[0] === '#' && element.match(/#/g)[1]) {
+      if (element[0] === '#' && element.match(/#/g).length > 1) {
         isValidity = false;
         this.addInvalidity('Хэш-теги должны разделяться с помощью пробела');
       }

@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.BigUserPhoto = function (photo) {
+  window.BigPhoto = function (photo) {
     this.url = photo.url;
     this.likes = photo.likes;
     this.comments = photo.comments;
