@@ -2,25 +2,25 @@
 
 (function () {
   var checkMainHasloadingModal = function () {
-    var loadingMessageModal = document.querySelector('.img-upload__message--loading');
-    var loadingMessageModalInMain = Array.from(window.variables.main.childNodes).some(function (it) {
-      return it === loadingMessageModal;
+    var loadingMessageModalElement = document.querySelector('.img-upload__message--loading');
+    var loadingMessageModalInMain = Array.from(window.variables.mainElement.childNodes).some(function (it) {
+      return it === loadingMessageModalElement;
     });
 
     if (loadingMessageModalInMain) {
-      window.variables.main.removeChild(loadingMessageModal);
+      window.variables.mainElement.removeChild(loadingMessageModalElement);
     }
   };
 
   window.popupMessages = {
     showError: function (idTemplate, errorMessage) {
-      var errorTemplate = document.querySelector(idTemplate).content.querySelector('.error');
-      var errorModal = errorTemplate.cloneNode(true);
-      var errorText = errorModal.querySelector('.error__title');
+      var errorTemplateElement = document.querySelector(idTemplate).content.querySelector('.error');
+      var errorModalElement = errorTemplateElement.cloneNode(true);
+      var errorTextElement = errorModalElement.querySelector('.error__title');
 
       var onErrorEscPress = function (evt) {
         if (window.keyboard.isEscPressed(evt)) {
-          window.variables.main.removeChild(errorModal);
+          window.variables.mainElement.removeChild(errorModalElement);
           document.removeEventListener('keydown', onErrorEscPress);
         }
       };
@@ -28,61 +28,61 @@
       checkMainHasloadingModal();
 
       if (errorMessage) {
-        errorText.textContent = errorMessage;
+        errorTextElement.textContent = errorMessage;
       }
 
-      window.variables.main.appendChild(errorModal);
+      window.variables.mainElement.appendChild(errorModalElement);
       document.addEventListener('keydown', onErrorEscPress);
 
-      errorModal.addEventListener('click', function (evt) {
+      errorModalElement.addEventListener('click', function (evt) {
         if (evt.target.className === 'error') {
-          window.variables.main.removeChild(errorModal);
+          window.variables.mainElement.removeChild(errorModalElement);
           document.removeEventListener('keydown', onErrorEscPress);
         }
 
         if (evt.target.classList.contains('error__button')) {
           evt.preventDefault();
-          window.variables.main.removeChild(errorModal);
+          window.variables.mainElement.removeChild(errorModalElement);
           document.removeEventListener('keydown', onErrorEscPress);
         }
       });
     },
 
     showSuccess: function (idTemplate) {
-      var successTemplate = document.querySelector(idTemplate).content.querySelector('.success');
-      var successModal = successTemplate.cloneNode(true);
+      var successTemplateElement = document.querySelector(idTemplate).content.querySelector('.success');
+      var successModalElement = successTemplateElement.cloneNode(true);
 
       var onSuccessEscPress = function (evt) {
         if (window.keyboard.isEscPressed(evt)) {
-          window.variables.main.removeChild(successModal);
+          window.variables.mainElement.removeChild(successModalElement);
           document.removeEventListener('keydown', onSuccessEscPress);
         }
       };
 
       checkMainHasloadingModal();
-      window.variables.main.appendChild(successModal);
+      window.variables.mainElement.appendChild(successModalElement);
       document.addEventListener('keydown', onSuccessEscPress);
 
-      successModal.addEventListener('click', function (evt) {
+      successModalElement.addEventListener('click', function (evt) {
         if (evt.target.className === 'success') {
           evt.preventDefault();
-          window.variables.main.removeChild(successModal);
+          window.variables.mainElement.removeChild(successModalElement);
           document.removeEventListener('keydown', onSuccessEscPress);
         }
 
         if (evt.target.classList.contains('success__button')) {
           evt.preventDefault();
-          window.variables.main.removeChild(successModal);
+          window.variables.mainElement.removeChild(successModalElement);
           document.removeEventListener('keydown', onSuccessEscPress);
         }
       });
     },
 
     showLoading: function () {
-      var loadingTemplate = document.querySelector('#messages').content.querySelector('.img-upload__message--loading');
-      var loadingModal = loadingTemplate.cloneNode(true);
+      var loadingTemplateElement = document.querySelector('#messages').content.querySelector('.img-upload__message--loading');
+      var loadingModalElement = loadingTemplateElement.cloneNode(true);
 
-      window.variables.main.appendChild(loadingModal);
+      window.variables.mainElement.appendChild(loadingModalElement);
     }
   };
 })();

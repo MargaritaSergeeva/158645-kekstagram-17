@@ -14,7 +14,7 @@
 
   window.backend.load(window.constants.Url.GET, onSuccessLoadData, onErrorLoadData);
 
-  window.variables.usersPhotosSection.addEventListener('click', function (evt) {
+  window.variables.usersPhotosSectionElement.addEventListener('click', function (evt) {
     if (evt.target.classList.contains('picture__img')) {
       var photoAddress = evt.target.src;
       window.renderTargetUserPhoto(photoAddress);

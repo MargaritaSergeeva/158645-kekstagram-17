@@ -6,9 +6,9 @@
     STEP: 25
   };
 
-  var imageZoomOut = window.variables.uploadImageModal.querySelector('.scale__control--smaller');
-  var imageZoomIn = window.variables.uploadImageModal.querySelector('.scale__control--bigger');
-  var imageZoomValue = window.variables.uploadImageModal.querySelector('.scale__control--value');
+  var imageZoomOutElement = window.variables.uploadImageModalElement.querySelector('.scale__control--smaller');
+  var imageZoomInElement = window.variables.uploadImageModalElement.querySelector('.scale__control--bigger');
+  var imageZoomValueElement = window.variables.uploadImageModalElement.querySelector('.scale__control--value');
 
 
   var getNamberFromInputValue = function (element) {
@@ -44,13 +44,13 @@
     }
   };
 
-  imageZoomIn.addEventListener('click', function () {
-    changeInputValueWithPercent(imageZoomValue, getNamberFromInputValue(imageZoomValue), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, true);
-    changeImgScale(window.variables.imagePreview, getNamberFromInputValue(imageZoomValue));
+  imageZoomInElement.addEventListener('click', function () {
+    changeInputValueWithPercent(imageZoomValueElement, getNamberFromInputValue(imageZoomValueElement), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, true);
+    changeImgScale(window.variables.imagePreviewElement, getNamberFromInputValue(imageZoomValueElement));
   });
 
-  imageZoomOut.addEventListener('click', function () {
-    changeInputValueWithPercent(imageZoomValue, getNamberFromInputValue(imageZoomValue), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, false);
-    changeImgScale(window.variables.imagePreview, getNamberFromInputValue(imageZoomValue));
+  imageZoomOutElement.addEventListener('click', function () {
+    changeInputValueWithPercent(imageZoomValueElement, getNamberFromInputValue(imageZoomValueElement), InputValue.MIN, window.constants.MAX_PERCENT_INPUT_VALUE, InputValue.STEP, false);
+    changeImgScale(window.variables.imagePreviewElement, getNamberFromInputValue(imageZoomValueElement));
   });
 })();

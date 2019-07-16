@@ -6,18 +6,18 @@
     MAX: 1
   };
 
-  var effectsListImage = window.variables.uploadImageModal.querySelector('.effects__list');
-  var effectsSliderLine = window.variables.uploadImageModal.querySelector('.effect-level__line');
-  var effectsSliderPin = window.variables.uploadImageModal.querySelector('.effect-level__pin');
-  var effectsSliderDepthScale = window.variables.uploadImageModal.querySelector('.effect-level__depth');
-  var effectsLavelValue = window.variables.uploadImageModal.querySelector('.effect-level__value');
+  var effectsListImageElement = window.variables.uploadImageModalElement.querySelector('.effects__list');
+  var effectsSliderLineElement = window.variables.uploadImageModalElement.querySelector('.effect-level__line');
+  var effectsSliderPinElement = window.variables.uploadImageModalElement.querySelector('.effect-level__pin');
+  var effectsSliderDepthScaleElement = window.variables.uploadImageModalElement.querySelector('.effect-level__depth');
+  var effectsLevelValueElement = window.variables.uploadImageModalElement.querySelector('.effect-level__value');
 
 
   var hideSlider = function (evt) {
-    if (evt.target === window.variables.originImageInput) {
-      window.utils.closeElement(window.variables.effectsSlider);
+    if (evt.target === window.variables.originImageInputElement) {
+      window.utils.closeElement(window.variables.effectsSliderElement);
     } else {
-      window.utils.showElement(window.variables.effectsSlider);
+      window.utils.showElement(window.variables.effectsSliderElement);
     }
   };
 
@@ -59,11 +59,11 @@
   };
 
   var changeSaturationValue = function (evt) {
-    effectsLavelValue.value = getProportion(evt, effectsSliderLine) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
+    effectsLevelValueElement.value = getProportion(evt, effectsSliderLineElement) * window.constants.MULTIPLIER_DIVISOR_ON_HUNDRED_PARTS;
   };
 
   var resetSaturationValue = function () {
-    effectsLavelValue.value = window.constants.MAX_PERCENT_INPUT_VALUE;
+    effectsLevelValueElement.value = window.constants.MAX_PERCENT_INPUT_VALUE;
   };
 
   var changeSliderDepthScale = function (evt, element, scaleElement) {
@@ -142,24 +142,24 @@
     }
   };
 
-  effectsSliderPin.addEventListener('mousedown', function (evt) {
+  effectsSliderPinElement.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    mouseMoveBlockX(effectsSliderPin, effectsSliderLine, window.variables.imagePreview, effectsSliderDepthScale);
+    mouseMoveBlockX(effectsSliderPinElement, effectsSliderLineElement, window.variables.imagePreviewElement, effectsSliderDepthScaleElement);
   });
 
-  effectsSliderLine.addEventListener('click', function (evt) {
+  effectsSliderLineElement.addEventListener('click', function (evt) {
     evt.preventDefault();
-    changePositionBlockX(evt, effectsSliderPin, effectsSliderLine);
-    changeSliderDepthScale(evt, effectsSliderDepthScale, effectsSliderLine);
-    changeBlockFilterStyle(evt, window.variables.imagePreview, effectsSliderLine);
+    changePositionBlockX(evt, effectsSliderPinElement, effectsSliderLineElement);
+    changeSliderDepthScale(evt, effectsSliderDepthScaleElement, effectsSliderLineElement);
+    changeBlockFilterStyle(evt, window.variables.imagePreviewElement, effectsSliderLineElement);
     changeSaturationValue(evt);
   });
 
-  effectsListImage.addEventListener('click', function (evt) {
-    addImageClass(evt, window.variables.imagePreview);
+  effectsListImageElement.addEventListener('click', function (evt) {
+    addImageClass(evt, window.variables.imagePreviewElement);
     hideSlider(evt);
     resetSaturationValue();
-    window.utils.resetBlockPosition(effectsSliderPin);
-    resetSliderDepthScale(effectsSliderDepthScale);
+    window.utils.resetBlockPosition(effectsSliderPinElement);
+    resetSliderDepthScale(effectsSliderDepthScaleElement);
   });
 })();

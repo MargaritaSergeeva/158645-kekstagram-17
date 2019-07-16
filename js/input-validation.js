@@ -2,7 +2,7 @@
 
 (function () {
   window.checkHashTagInputValidity = function (input) {
-    var hashtags = window.variables.imageHashtags.value
+    var hashtags = window.variables.imageHashtagsElement.value
     .split(' ')
     .map(function (it) {
       return it.toLowerCase();
@@ -25,8 +25,8 @@
     }
   };
 
-  window.variables.imageHashtags.addEventListener('change', function (evt) {
+  window.variables.imageHashtagsElement.addEventListener('change', function (evt) {
     evt.preventDefault();
-    window.checkHashTagInputValidity(window.variables.imageHashtags);
+    window.checkHashTagInputValidity(window.variables.imageHashtagsElement);
   });
 })();

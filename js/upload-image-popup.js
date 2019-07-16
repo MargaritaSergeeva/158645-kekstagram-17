@@ -1,56 +1,56 @@
 'use strict';
 
 (function () {
-  var closureUploadImage = window.variables.uploadImageModal.querySelector('#upload-cancel');
+  var closureUploadImageElement = window.variables.uploadImageModalElement.querySelector('#upload-cancel');
 
 
   var resetChangesUploadImageModal = function () {
-    window.utils.resetInputValue(window.variables.openerUploadImage);
-    window.utils.resetInputValue(window.variables.imageHashtags);
-    window.utils.resetInputValue(window.variables.imageDescription);
-    window.utils.resetElementStyle(window.variables.imagePreview.querySelector('img'), 'transform');
-    window.utils.resetElementStyle(window.variables.imagePreview, 'filter');
-    window.utils.assignOneClassToElement(window.variables.imagePreview, 'img-upload__preview');
-    window.utils.closeElement(window.variables.effectsSlider);
-    window.variables.originImageInput.checked = true;
-    window.utils.resetElementStyle(window.variables.imageHashtags, 'borderColor');
+    window.utils.resetInputValue(window.variables.openerUploadImageElement);
+    window.utils.resetInputValue(window.variables.imageHashtagsElement);
+    window.utils.resetInputValue(window.variables.imageDescriptionElement);
+    window.utils.resetElementStyle(window.variables.imagePreviewElement.querySelector('img'), 'transform');
+    window.utils.resetElementStyle(window.variables.imagePreviewElement, 'filter');
+    window.utils.assignOneClassToElement(window.variables.imagePreviewElement, 'img-upload__preview');
+    window.utils.closeElement(window.variables.effectsSliderElement);
+    window.variables.originImageInputElement.checked = true;
+    window.utils.resetElementStyle(window.variables.imageHashtagsElement, 'borderColor');
     document.removeEventListener('keydown', onUploadImageModalEscPress);
   };
 
   var onUploadImageModalEscPress = function (evt) {
     if (window.keyboard.isEscPressed(evt)) {
       resetChangesUploadImageModal();
-      window.utils.closeElement(window.variables.uploadImageModal);
+      window.utils.closeElement(window.variables.uploadImageModalElement);
     }
   };
 
   window.closeUploadImageModal = function () {
     resetChangesUploadImageModal();
-    window.utils.closeElement(window.variables.uploadImageModal);
+    window.utils.closeElement(window.variables.uploadImageModalElement);
   };
 
-  window.variables.openerUploadImage.addEventListener('change', function () {
+  window.variables.openerUploadImageElement.addEventListener('change', function () {
     window.loadUserImage();
     document.addEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  closureUploadImage.addEventListener('click', function () {
+  closureUploadImageElement.addEventListener('click', function () {
     window.closeUploadImageModal();
   });
 
-  window.variables.imageDescription.addEventListener('focus', function () {
+  window.variables.imageDescriptionElement.addEventListener('focus', function () {
     document.removeEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  window.variables.imageDescription.addEventListener('blur', function () {
+  window.variables.imageDescriptionElement.addEventListener('blur', function () {
     document.addEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  window.variables.imageHashtags.addEventListener('focus', function () {
+  window.variables.imageHashtagsElement.addEventListener('focus', function () {
     document.removeEventListener('keydown', onUploadImageModalEscPress);
   });
 
-  window.variables.imageHashtags.addEventListener('blur', function () {
+  window.variables.imageHashtagsElement.addEventListener('blur', function () {
     document.addEventListener('keydown', onUploadImageModalEscPress);
   });
 })();

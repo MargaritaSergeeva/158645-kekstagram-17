@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var uploadImageForm = window.variables.usersPhotosSection.querySelector('.img-upload__form');
+  var uploadImageFormElement = window.variables.usersPhotosSectionElement.querySelector('.img-upload__form');
 
 
   var onSuccessSendForm = function () {
@@ -15,10 +15,10 @@
   };
 
 
-  uploadImageForm.addEventListener('submit', function (evt) {
+  uploadImageFormElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.checkHashTagInputValidity(window.variables.imageHashtags);
+    window.checkHashTagInputValidity(window.variables.imageHashtagsElement);
     window.popupMessages.showLoading();
-    window.backend.save(window.constants.Url.POST, new FormData(uploadImageForm), onSuccessSendForm, onErrorSendForm);
+    window.backend.save(window.constants.Url.POST, new FormData(uploadImageFormElement), onSuccessSendForm, onErrorSendForm);
   });
 })();

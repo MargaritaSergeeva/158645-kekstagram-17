@@ -2,11 +2,11 @@
 
 (function () {
   var MAX_PHOTOS_COUNT = 25;
-  var childrenCount = window.variables.usersPhotosSection.childNodes.length;
+  var childrenCount = window.variables.usersPhotosSectionElement.childNodes.length;
 
   var createUserPhoto = function (photo) {
-    var userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
-    var userPhotoElement = userPhotoTemplate.cloneNode(true);
+    var userPhotoTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
+    var userPhotoElement = userPhotoTemplateElement.cloneNode(true);
 
     if (Object.keys(photo).length > 0) {
       userPhotoElement.querySelector('.picture__img').src = photo.url;
@@ -35,8 +35,8 @@
         fragment.appendChild(createUserPhoto(it));
       });
 
-      removeUsersPhotos(window.variables.usersPhotosSection);
-      window.variables.usersPhotosSection.appendChild(fragment);
+      removeUsersPhotos(window.variables.usersPhotosSectionElement);
+      window.variables.usersPhotosSectionElement.appendChild(fragment);
     }
 
     return {};
